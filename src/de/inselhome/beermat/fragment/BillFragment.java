@@ -13,6 +13,9 @@ import de.inselhome.beermat.test.TestData;
 import de.inselhome.beermat.widget.adapters.BillPositionAdapter;
 import junit.framework.Assert;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class BillFragment extends Fragment implements BillPositionAdapter.ClickListener {
 
     public interface BillListener {
@@ -22,6 +25,8 @@ public class BillFragment extends Fragment implements BillPositionAdapter.ClickL
 
         void onDecreaseBillPosition(BillPosition billPosition);
     }
+
+    private static final NumberFormat CURRENCY_FORMAT = NumberFormat.getCurrencyInstance(Locale.getDefault());
 
     private BillListener billListener;
     private BillPositionAdapter billPositionAdapter;
@@ -79,6 +84,10 @@ public class BillFragment extends Fragment implements BillPositionAdapter.ClickL
             sum += bp.sum();
         }
 
-        sumView.setText("Summe: " + String.valueOf(sum) + " €");
+        sumView.setText("Summe: " + formatAmount(sum));
+    }
+
+    private String formatAmount(double amount) {
+        return CURRENCY_FORMAT.format(amount);
     }
 }
