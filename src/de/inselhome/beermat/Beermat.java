@@ -32,11 +32,11 @@ public class Beermat extends Activity implements BillFragment.BillListener {
 
     @Override
     public void onIncreaseBillPosition(BillPosition billPosition) {
-        // TODO implement me
+        billPosition.increase();
     }
 
     @Override
     public void onDecreaseBillPosition(BillPosition billPosition) {
-        // TODO implement me
+        billPosition.decrease();
     }
 }

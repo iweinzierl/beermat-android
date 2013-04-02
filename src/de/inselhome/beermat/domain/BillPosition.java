@@ -34,7 +34,9 @@ public class BillPosition {
     }
 
     public void decrease() {
-        this.amount--;
+        if (this.amount > 0) {
+            this.amount--;
+        }
     }
 
     public double sum() {

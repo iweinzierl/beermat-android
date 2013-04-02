@@ -1,23 +1,19 @@
 package de.inselhome.beermat.fragment;
 
 import android.app.Fragment;
-
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ListView;
-
+import android.widget.TextView;
 import de.inselhome.beermat.R;
 import de.inselhome.beermat.domain.BillPosition;
 import de.inselhome.beermat.test.TestData;
 import de.inselhome.beermat.widget.adapters.BillPositionAdapter;
-
 import junit.framework.Assert;
 
-public class BillFragment extends Fragment {
+public class BillFragment extends Fragment implements BillPositionAdapter.ClickListener {
 
     public interface BillListener {
         void onRemoveBillPosition(BillPosition billPosition);
@@ -29,17 +25,21 @@ public class BillFragment extends Fragment {
 
     private BillListener billListener;
     private BillPositionAdapter billPositionAdapter;
+
     private ListView list;
+    private TextView sumView;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
 
+        billPositionAdapter = new BillPositionAdapter(getActivity(), this, TestData.createBillPositionList());
+
         View view = inflater.inflate(R.layout.fragment_bill, container, false);
         list = (ListView) view.findViewById(R.id.list);
-        billPositionAdapter = new BillPositionAdapter(getActivity(), TestData.createBillPositionList());
-
         list.setAdapter(billPositionAdapter);
+
+        sumView = (TextView) view.findViewById(R.id.sum);
 
         return view;
     }
@@ -55,5 +55,30 @@ public class BillFragment extends Fragment {
 
     public void removeBillPosition(final BillPosition billPosition) {
         // TODO remove bill position widget
+    }
+
+    @Override
+    public void onDecreaseClick(BillPosition billPosition) {
+        billListener.onDecreaseBillPosition(billPosition);
+        billPositionAdapter.notifyDataSetChanged();
+        sum();
+    }
+
+    @Override
+    public void onIncreaseClick(BillPosition billPosition) {
+        billListener.onIncreaseBillPosition(billPosition);
+        billPositionAdapter.notifyDataSetChanged();
+        sum();
+    }
+
+    public void sum() {
+        double sum = 0;
+
+        for (int i = 0; i < billPositionAdapter.getCount(); i++) {
+            BillPosition bp = (BillPosition) billPositionAdapter.getItem(i);
+            sum += bp.sum();
+        }
+
+        sumView.setText("Summe: " + String.valueOf(sum) + " €");
     }
 }
