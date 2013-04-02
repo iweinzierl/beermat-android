@@ -12,6 +12,7 @@ public class Beermat extends Activity implements BillFragment.BillListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_beermat);
 
         billFragment = buildBillFragment();
         getFragmentManager().beginTransaction().add(R.id.billFragment, billFragment).commit();
