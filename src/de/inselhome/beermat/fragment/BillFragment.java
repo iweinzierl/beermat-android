@@ -87,6 +87,11 @@ public class BillFragment extends Fragment implements BillPositionAdapter.ClickL
         sumView.setText("Summe: " + formatAmount(sum));
     }
 
+    public void reset() {
+        billPositionAdapter.removeAllItems();
+        sum();
+    }
+
     private String formatAmount(double amount) {
         return CURRENCY_FORMAT.format(amount);
     }

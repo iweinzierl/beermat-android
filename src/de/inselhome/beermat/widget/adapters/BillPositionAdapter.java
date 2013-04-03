@@ -88,4 +88,9 @@ public class BillPositionAdapter extends BaseAdapter {
 
         return view;
     }
+
+    public void removeAllItems() {
+        billPositions.clear();
+        notifyDataSetChanged();
+    }
 }
