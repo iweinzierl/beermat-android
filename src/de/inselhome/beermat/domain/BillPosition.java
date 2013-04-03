@@ -1,19 +1,17 @@
 package de.inselhome.beermat.domain;
 
-import junit.framework.Assert;
-
 import java.io.Serializable;
 
-public class BillPosition implements Serializable {
+import junit.framework.Assert;
+
+public class BillPosition implements Serializable, Comparable<BillPosition> {
 
     private BillItem billItem;
     private int amount;
 
-    public BillPosition() {
-    }
+    public BillPosition() { }
 
-
-    public BillPosition(BillItem billItem) {
+    public BillPosition(final BillItem billItem) {
         Assert.assertNotNull("Bill item may not be null", billItem);
         this.billItem = billItem;
     }
@@ -22,7 +20,7 @@ public class BillPosition implements Serializable {
         return billItem;
     }
 
-    public void setBillItem(BillItem billItem) {
+    public void setBillItem(final BillItem billItem) {
         this.billItem = billItem;
     }
 
@@ -30,7 +28,7 @@ public class BillPosition implements Serializable {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(final int amount) {
         this.amount = amount;
     }
 
@@ -49,7 +47,7 @@ public class BillPosition implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (!(o instanceof BillPosition)) {
             return false;
         }
@@ -60,11 +58,15 @@ public class BillPosition implements Serializable {
             return false;
         }
 
-        if (other.getBillItem() != getBillItem()) {
+        if (!other.getBillItem().equals(getBillItem())) {
             return false;
         }
 
         return true;
     }
-}
 
+    @Override
+    public int compareTo(final BillPosition another) {
+        return getBillItem().compareTo(another.getBillItem());
+    }
+}

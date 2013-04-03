@@ -1,34 +1,42 @@
 package de.inselhome.beermat.widget.adapters;
 
+import java.util.Collections;
+import java.util.List;
+
 import android.content.Context;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+
 import de.inselhome.beermat.R;
 import de.inselhome.beermat.domain.BillPosition;
-import junit.framework.Assert;
 
-import java.util.List;
+import junit.framework.Assert;
 
 public class BillPositionAdapter extends BaseAdapter {
 
-    public interface ClickListener {
+    public interface ActionHandler {
         void onDecreaseClick(BillPosition billPosition);
+
         void onIncreaseClick(BillPosition billPosition);
+
+        void onDetailClick(BillPosition billPosition);
     }
 
     private Context context;
-    private final ClickListener clickListener;
+    private final ActionHandler actionHandler;
     private List<BillPosition> billPositions;
 
-    public BillPositionAdapter(final Context context, final ClickListener clickListener,
-                               final List<BillPosition> billPositions) {
+    public BillPositionAdapter(final Context context, final ActionHandler actionHandler,
+            final List<BillPosition> billPositions) {
         this.context = context;
-        this.clickListener = clickListener;
-        this.billPositions = billPositions;
+        this.actionHandler = actionHandler;
+        setBillPositions(billPositions);
     }
 
     @Override
@@ -73,27 +81,55 @@ public class BillPositionAdapter extends BaseAdapter {
         Button decrease = (Button) view.findViewById(R.id.decrease);
         Button increase = (Button) view.findViewById(R.id.increase);
 
+        description.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    actionHandler.onDetailClick(bp);
+                }
+            });
+
+        amount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    actionHandler.onDetailClick(bp);
+                }
+            });
+
         decrease.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickListener.onDecreaseClick(bp);
-            }
-        });
+                @Override
+                public void onClick(final View view) {
+                    actionHandler.onDecreaseClick(bp);
+                }
+            });
 
         increase.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickListener.onIncreaseClick(bp);
-            }
-        });
+                @Override
+                public void onClick(final View view) {
+                    actionHandler.onIncreaseClick(bp);
+                }
+            });
 
         return view;
     }
 
-    public void add(BillPosition billPosition) {
+    private void setBillPositions(final List<BillPosition> billPositions) {
+        Collections.sort(billPositions);
+        this.billPositions = billPositions;
+    }
+
+    public void add(final BillPosition billPosition) {
         Assert.assertNotNull(billPosition);
         billPositions.add(billPosition);
+        setBillPositions(billPositions);
         notifyDataSetChanged();
+    }
+
+    public void remove(final BillPosition billPosition) {
+        Assert.assertNotNull(billPosition);
+        if (billPositions.contains(billPosition)) {
+            billPositions.remove(billPosition);
+            setBillPositions(billPositions);
+        }
     }
 
     public void removeAllItems() {

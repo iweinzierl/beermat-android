@@ -1,34 +1,42 @@
 package de.inselhome.beermat.fragment;
 
+import java.text.NumberFormat;
+
+import java.util.Locale;
+
 import android.app.Fragment;
+
 import android.os.Bundle;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.ListView;
 import android.widget.TextView;
+
 import de.inselhome.beermat.R;
 import de.inselhome.beermat.domain.BillPosition;
 import de.inselhome.beermat.test.TestData;
 import de.inselhome.beermat.widget.adapters.BillPositionAdapter;
+
 import junit.framework.Assert;
 
-import java.text.NumberFormat;
-import java.util.Locale;
+public class BillFragment extends Fragment implements BillPositionAdapter.ActionHandler {
 
-public class BillFragment extends Fragment implements BillPositionAdapter.ClickListener {
-
-    public interface BillListener {
+    public interface ActionHandler {
         void onRemoveBillPosition(BillPosition billPosition);
 
         void onIncreaseBillPosition(BillPosition billPosition);
 
         void onDecreaseBillPosition(BillPosition billPosition);
+
+        void onDetailClick(BillPosition billPosition);
     }
 
     private static final NumberFormat CURRENCY_FORMAT = NumberFormat.getCurrencyInstance(Locale.getDefault());
 
-    private BillListener billListener;
+    private ActionHandler actionHandler;
     private BillPositionAdapter billPositionAdapter;
 
     private ListView list;
@@ -49,9 +57,9 @@ public class BillFragment extends Fragment implements BillPositionAdapter.ClickL
         return view;
     }
 
-    public void setBillListener(final BillListener billListener) {
-        Assert.assertNotNull(billListener);
-        this.billListener = billListener;
+    public void setActionHandler(final ActionHandler actionHandler) {
+        Assert.assertNotNull(actionHandler);
+        this.actionHandler = actionHandler;
     }
 
     public void addBillPosition(final BillPosition billPosition) {
@@ -60,21 +68,26 @@ public class BillFragment extends Fragment implements BillPositionAdapter.ClickL
     }
 
     public void removeBillPosition(final BillPosition billPosition) {
-        // TODO remove bill position widget
+        billPositionAdapter.remove(billPosition);
     }
 
     @Override
-    public void onDecreaseClick(BillPosition billPosition) {
-        billListener.onDecreaseBillPosition(billPosition);
+    public void onDecreaseClick(final BillPosition billPosition) {
+        actionHandler.onDecreaseBillPosition(billPosition);
         billPositionAdapter.notifyDataSetChanged();
         sum();
     }
 
     @Override
-    public void onIncreaseClick(BillPosition billPosition) {
-        billListener.onIncreaseBillPosition(billPosition);
+    public void onIncreaseClick(final BillPosition billPosition) {
+        actionHandler.onIncreaseBillPosition(billPosition);
         billPositionAdapter.notifyDataSetChanged();
         sum();
+    }
+
+    @Override
+    public void onDetailClick(final BillPosition billPosition) {
+        actionHandler.onDetailClick(billPosition);
     }
 
     public void sum() {
@@ -93,7 +106,7 @@ public class BillFragment extends Fragment implements BillPositionAdapter.ClickL
         sum();
     }
 
-    private String formatAmount(double amount) {
+    private String formatAmount(final double amount) {
         return CURRENCY_FORMAT.format(amount);
     }
 }

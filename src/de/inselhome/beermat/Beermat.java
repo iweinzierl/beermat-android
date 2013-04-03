@@ -2,21 +2,26 @@ package de.inselhome.beermat;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+
 import android.content.DialogInterface;
 import android.content.Intent;
+
 import android.os.Bundle;
+
 import android.view.Menu;
 import android.view.MenuItem;
+
 import de.inselhome.beermat.domain.BillPosition;
 import de.inselhome.beermat.fragment.BillFragment;
+import de.inselhome.beermat.intent.EditBillPositionIntent;
 import de.inselhome.beermat.intent.NewBillPositionIntent;
 
-public class Beermat extends Activity implements BillFragment.BillListener {
+public class Beermat extends Activity implements BillFragment.ActionHandler {
 
     private BillFragment billFragment;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beermat);
 
@@ -25,62 +30,81 @@ public class Beermat extends Activity implements BillFragment.BillListener {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.bill, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
+    public boolean onOptionsItemSelected(final MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case R.id.addBillPosition:
+
+            case R.id.addBillPosition :
                 onAddBillPosition();
                 return true;
-            case R.id.saveProfile:
+
+            case R.id.saveProfile :
                 onSaveProfile();
                 return true;
-            case R.id.reset:
+
+            case R.id.reset :
                 onReset();
                 return true;
-            default:
+
+            default :
                 return false;
         }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case NewBillPositionIntent.REQUEST_BILLPOSITION:
+
+            case NewBillPositionIntent.REQUEST_BILLPOSITION :
                 if (resultCode == RESULT_OK) {
                     NewBillPositionIntent i = new NewBillPositionIntent(data);
                     addBillPosition(i.getBillPosition());
+                    return;
                 }
+
+            case EditBillPositionIntent.REQUEST_BILLPOSITION :
+                if (resultCode == RESULT_OK) {
+                    EditBillPositionIntent i = new EditBillPositionIntent(data);
+                    editBillPosition(i.getOldBillPosition(), i.getNewBillPosition());
+                    return;
+                }
+
         }
     }
-
 
     private BillFragment buildBillFragment() {
         BillFragment billFragment = new BillFragment();
         billFragment.setArguments(getIntent().getExtras());
-        billFragment.setBillListener(this);
+        billFragment.setActionHandler(this);
         return billFragment;
     }
 
     @Override
-    public void onRemoveBillPosition(BillPosition billPosition) {
+    public void onRemoveBillPosition(final BillPosition billPosition) {
         // TODO implement me
     }
 
     @Override
-    public void onIncreaseBillPosition(BillPosition billPosition) {
+    public void onIncreaseBillPosition(final BillPosition billPosition) {
         billPosition.increase();
     }
 
     @Override
-    public void onDecreaseBillPosition(BillPosition billPosition) {
+    public void onDecreaseBillPosition(final BillPosition billPosition) {
         billPosition.decrease();
+    }
+
+    @Override
+    public void onDetailClick(final BillPosition billPosition) {
+        Intent i = new EditBillPositionIntent(this, billPosition);
+        startActivityForResult(i, EditBillPositionIntent.REQUEST_BILLPOSITION);
     }
 
     private void onAddBillPosition() {
@@ -88,8 +112,13 @@ public class Beermat extends Activity implements BillFragment.BillListener {
         startActivityForResult(i, NewBillPositionIntent.REQUEST_BILLPOSITION);
     }
 
-    private void addBillPosition(BillPosition billPosition) {
+    private void addBillPosition(final BillPosition billPosition) {
         billFragment.addBillPosition(billPosition);
+    }
+
+    private void editBillPosition(final BillPosition oldBP, final BillPosition newBP) {
+        billFragment.removeBillPosition(oldBP);
+        billFragment.addBillPosition(newBP);
     }
 
     private void onSaveProfile() {
@@ -97,15 +126,15 @@ public class Beermat extends Activity implements BillFragment.BillListener {
     }
 
     private void onReset() {
-        new AlertDialog.Builder(this).setMessage("Really reset bill?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                billFragment.reset();
-            }
-        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
-        }).show();
+        new AlertDialog.Builder(this).setMessage("Really reset bill?")
+                                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                             @Override
+                                             public void onClick(final DialogInterface dialogInterface, final int i) {
+                                                 billFragment.reset();
+                                             }
+                                         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                             @Override
+                                             public void onClick(final DialogInterface dialogInterface, final int i) { }
+                                         }).show();
     }
 }

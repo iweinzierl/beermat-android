@@ -14,5 +14,7 @@
         </activity>
         <activity android:name=".NewBillPosition"
                   android:label="New Bill Position"/>
+        <activity android:name=".EditBillPosition"
+                  android:label="Edit Bill Position"/>
     </application>
 </manifest>
