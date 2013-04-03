@@ -3,11 +3,13 @@ package de.inselhome.beermat;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import de.inselhome.beermat.domain.BillPosition;
 import de.inselhome.beermat.fragment.BillFragment;
+import de.inselhome.beermat.intent.NewBillPositionIntent;
 
 public class Beermat extends Activity implements BillFragment.BillListener {
 
@@ -45,6 +47,19 @@ public class Beermat extends Activity implements BillFragment.BillListener {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case NewBillPositionIntent.REQUEST_BILLPOSITION:
+                if (resultCode == RESULT_OK) {
+                    NewBillPositionIntent i = new NewBillPositionIntent(data);
+                    addBillPosition(i.getBillPosition());
+                }
+        }
+    }
+
 
     private BillFragment buildBillFragment() {
         BillFragment billFragment = new BillFragment();
@@ -69,7 +84,12 @@ public class Beermat extends Activity implements BillFragment.BillListener {
     }
 
     private void onAddBillPosition() {
-        // TODO
+        Intent i = new NewBillPositionIntent(this);
+        startActivityForResult(i, NewBillPositionIntent.REQUEST_BILLPOSITION);
+    }
+
+    private void addBillPosition(BillPosition billPosition) {
+        billFragment.addBillPosition(billPosition);
     }
 
     private void onSaveProfile() {

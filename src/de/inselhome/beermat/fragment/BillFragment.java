@@ -55,7 +55,8 @@ public class BillFragment extends Fragment implements BillPositionAdapter.ClickL
     }
 
     public void addBillPosition(final BillPosition billPosition) {
-        // TODO add bill position widget
+        billPositionAdapter.add(billPosition);
+        sum();
     }
 
     public void removeBillPosition(final BillPosition billPosition) {

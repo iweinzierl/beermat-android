@@ -2,10 +2,15 @@ package de.inselhome.beermat.domain;
 
 import junit.framework.Assert;
 
-public class BillItem {
+import java.io.Serializable;
+
+public class BillItem implements Serializable {
 
     private String description;
     private double price;
+
+    public BillItem() {
+    }
 
     public BillItem(String description, double price) {
         Assert.assertNotNull("Description of bill item may not be null", description);

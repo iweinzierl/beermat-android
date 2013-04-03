@@ -2,10 +2,15 @@ package de.inselhome.beermat.domain;
 
 import junit.framework.Assert;
 
-public class BillPosition {
+import java.io.Serializable;
+
+public class BillPosition implements Serializable {
 
     private BillItem billItem;
     private int amount;
+
+    public BillPosition() {
+    }
 
 
     public BillPosition(BillItem billItem) {

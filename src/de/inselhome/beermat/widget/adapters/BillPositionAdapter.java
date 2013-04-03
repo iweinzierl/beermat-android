@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import de.inselhome.beermat.R;
 import de.inselhome.beermat.domain.BillPosition;
+import junit.framework.Assert;
 
 import java.util.List;
 
@@ -87,6 +88,12 @@ public class BillPositionAdapter extends BaseAdapter {
         });
 
         return view;
+    }
+
+    public void add(BillPosition billPosition) {
+        Assert.assertNotNull(billPosition);
+        billPositions.add(billPosition);
+        notifyDataSetChanged();
     }
 
     public void removeAllItems() {
