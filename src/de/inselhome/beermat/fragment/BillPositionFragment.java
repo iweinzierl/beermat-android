@@ -22,8 +22,6 @@ public class BillPositionFragment extends Fragment {
         void onCancel();
     }
 
-    private static final NumberFormat CURRENCY_FORMAT = NumberFormat.getNumberInstance();
-
     private ActionHandler handler;
 
     private EditText description;
@@ -78,7 +76,7 @@ public class BillPositionFragment extends Fragment {
         String rawPrice = price.getText().toString();
 
         try {
-            BillItem item = new BillItem(desc, CURRENCY_FORMAT.parse(rawPrice).doubleValue());
+            BillItem item = new BillItem(desc, NumberFormat.getNumberInstance().parse(rawPrice).doubleValue());
             return new BillPosition(item);
         } catch (ParseException e) {
 

@@ -1,24 +1,19 @@
 package de.inselhome.beermat.fragment;
 
-import java.text.NumberFormat;
-import java.text.ParseException;
-
 import android.app.Fragment;
-
 import android.os.Bundle;
-
 import android.util.Log;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.Button;
 import android.widget.EditText;
-
 import de.inselhome.beermat.R;
 import de.inselhome.beermat.domain.BillItem;
 import de.inselhome.beermat.domain.BillPosition;
+
+import java.text.NumberFormat;
+import java.text.ParseException;
 
 public class EditBillPositionFragment extends Fragment {
 
@@ -27,8 +22,6 @@ public class EditBillPositionFragment extends Fragment {
 
         void onCancelClicked();
     }
-
-    private static final NumberFormat CURRENCY_FORMAT = NumberFormat.getNumberInstance();
 
     private final ActionHandler handler;
     private final BillPosition billPosition;
@@ -90,7 +83,7 @@ public class EditBillPositionFragment extends Fragment {
         String rawPrice = price.getText().toString();
 
         try {
-            BillItem item = new BillItem(rawDescription, CURRENCY_FORMAT.parse(rawPrice).doubleValue());
+            BillItem item = new BillItem(rawDescription, NumberFormat.getNumberInstance().parse(rawPrice).doubleValue());
             BillPosition newBP = new BillPosition(item);
             newBP.setAmount(billPosition.getAmount());
 
