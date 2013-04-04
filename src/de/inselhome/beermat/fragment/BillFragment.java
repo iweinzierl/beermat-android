@@ -1,26 +1,20 @@
 package de.inselhome.beermat.fragment;
 
-import java.text.NumberFormat;
-
-import java.util.Locale;
-
 import android.app.Fragment;
-
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ListView;
 import android.widget.TextView;
-
 import de.inselhome.beermat.R;
 import de.inselhome.beermat.domain.BillPosition;
 import de.inselhome.beermat.test.TestData;
 import de.inselhome.beermat.widget.adapters.BillPositionAdapter;
-
 import junit.framework.Assert;
+
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class BillFragment extends Fragment implements BillPositionAdapter.ActionHandler {
 
@@ -43,8 +37,7 @@ public class BillFragment extends Fragment implements BillPositionAdapter.Action
     private TextView sumView;
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-            final Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 
         billPositionAdapter = new BillPositionAdapter(getActivity(), this, TestData.createBillPositionList());
 
@@ -101,8 +94,13 @@ public class BillFragment extends Fragment implements BillPositionAdapter.Action
         sumView.setText("Summe: " + formatAmount(sum));
     }
 
-    public void reset() {
+    public void removeAllItems() {
         billPositionAdapter.removeAllItems();
+        sum();
+    }
+
+    public void resetAmounts() {
+        billPositionAdapter.resetAmounts();
         sum();
     }
 

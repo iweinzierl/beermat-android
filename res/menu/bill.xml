@@ -10,8 +10,12 @@
           android:title="Save Profile"
           android:showAsAction="ifRoom|withText"/>
 
-    <item android:id="@+id/reset"
-          android:title="Reset"
+    <item android:id="@+id/resetItems"
+          android:title="Reset Items"
+          android:showAsAction="ifRoom|withText"/>
+
+    <item android:id="@+id/resetAmounts"
+          android:title="Reset Amounts"
           android:showAsAction="ifRoom|withText"/>
 
 </menu>

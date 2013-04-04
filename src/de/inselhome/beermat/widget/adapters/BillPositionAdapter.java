@@ -1,22 +1,18 @@
 package de.inselhome.beermat.widget.adapters;
 
-import java.util.Collections;
-import java.util.List;
-
 import android.content.Context;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-
 import de.inselhome.beermat.R;
 import de.inselhome.beermat.domain.BillPosition;
-
 import junit.framework.Assert;
+
+import java.util.Collections;
+import java.util.List;
 
 public class BillPositionAdapter extends BaseAdapter {
 
@@ -32,8 +28,7 @@ public class BillPositionAdapter extends BaseAdapter {
     private final ActionHandler actionHandler;
     private List<BillPosition> billPositions;
 
-    public BillPositionAdapter(final Context context, final ActionHandler actionHandler,
-            final List<BillPosition> billPositions) {
+    public BillPositionAdapter(final Context context, final ActionHandler actionHandler, final List<BillPosition> billPositions) {
         this.context = context;
         this.actionHandler = actionHandler;
         setBillPositions(billPositions);
@@ -82,32 +77,32 @@ public class BillPositionAdapter extends BaseAdapter {
         Button increase = (Button) view.findViewById(R.id.increase);
 
         description.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    actionHandler.onDetailClick(bp);
-                }
-            });
+            @Override
+            public void onClick(final View v) {
+                actionHandler.onDetailClick(bp);
+            }
+        });
 
         amount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    actionHandler.onDetailClick(bp);
-                }
-            });
+            @Override
+            public void onClick(final View v) {
+                actionHandler.onDetailClick(bp);
+            }
+        });
 
         decrease.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View view) {
-                    actionHandler.onDecreaseClick(bp);
-                }
-            });
+            @Override
+            public void onClick(final View view) {
+                actionHandler.onDecreaseClick(bp);
+            }
+        });
 
         increase.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View view) {
-                    actionHandler.onIncreaseClick(bp);
-                }
-            });
+            @Override
+            public void onClick(final View view) {
+                actionHandler.onIncreaseClick(bp);
+            }
+        });
 
         return view;
     }
@@ -134,6 +129,14 @@ public class BillPositionAdapter extends BaseAdapter {
 
     public void removeAllItems() {
         billPositions.clear();
+        notifyDataSetChanged();
+    }
+
+    public void resetAmounts() {
+        for (BillPosition billPosition : billPositions) {
+            billPosition.setAmount(0);
+        }
+
         notifyDataSetChanged();
     }
 }

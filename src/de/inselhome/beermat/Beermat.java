@@ -39,19 +39,23 @@ public class Beermat extends Activity implements BillFragment.ActionHandler {
     public boolean onOptionsItemSelected(final MenuItem menuItem) {
         switch (menuItem.getItemId()) {
 
-            case R.id.addBillPosition :
+            case R.id.addBillPosition:
                 onAddBillPosition();
                 return true;
 
-            case R.id.saveProfile :
+            case R.id.saveProfile:
                 onSaveProfile();
                 return true;
 
-            case R.id.reset :
-                onReset();
+            case R.id.resetItems:
+                onResetItems();
                 return true;
 
-            default :
+            case R.id.resetAmounts:
+                onResetAmounts();
+                return true;
+
+            default:
                 return false;
         }
     }
@@ -62,14 +66,14 @@ public class Beermat extends Activity implements BillFragment.ActionHandler {
 
         switch (requestCode) {
 
-            case NewBillPositionIntent.REQUEST_BILLPOSITION :
+            case NewBillPositionIntent.REQUEST_BILLPOSITION:
                 if (resultCode == RESULT_OK) {
                     NewBillPositionIntent i = new NewBillPositionIntent(data);
                     addBillPosition(i.getBillPosition());
                     return;
                 }
 
-            case EditBillPositionIntent.REQUEST_BILLPOSITION :
+            case EditBillPositionIntent.REQUEST_BILLPOSITION:
                 if (resultCode == RESULT_OK) {
                     EditBillPositionIntent i = new EditBillPositionIntent(data);
                     editBillPosition(i.getOldBillPosition(), i.getNewBillPosition());
@@ -125,16 +129,29 @@ public class Beermat extends Activity implements BillFragment.ActionHandler {
         // TODO
     }
 
-    private void onReset() {
-        new AlertDialog.Builder(this).setMessage("Really reset bill?")
-                                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                             @Override
-                                             public void onClick(final DialogInterface dialogInterface, final int i) {
-                                                 billFragment.reset();
-                                             }
-                                         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                             @Override
-                                             public void onClick(final DialogInterface dialogInterface, final int i) { }
-                                         }).show();
+    private void onResetItems() {
+        new AlertDialog.Builder(this).setMessage("Remove all items from bill?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(final DialogInterface dialogInterface, final int i) {
+                billFragment.removeAllItems();
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(final DialogInterface dialogInterface, final int i) {
+            }
+        }).show();
+    }
+
+    private void onResetAmounts() {
+        new AlertDialog.Builder(this).setMessage("Reset all amounts of bill?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(final DialogInterface dialogInterface, final int i) {
+                billFragment.resetAmounts();
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(final DialogInterface dialogInterface, final int i) {
+            }
+        }).show();
     }
 }
