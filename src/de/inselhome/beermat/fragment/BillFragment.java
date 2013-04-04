@@ -28,8 +28,6 @@ public class BillFragment extends Fragment implements BillPositionAdapter.Action
         void onDetailClick(BillPosition billPosition);
     }
 
-    private static final NumberFormat CURRENCY_FORMAT = NumberFormat.getCurrencyInstance(Locale.getDefault());
-
     private ActionHandler actionHandler;
     private BillPositionAdapter billPositionAdapter;
 
@@ -105,6 +103,6 @@ public class BillFragment extends Fragment implements BillPositionAdapter.Action
     }
 
     private String formatAmount(final double amount) {
-        return CURRENCY_FORMAT.format(amount);
+        return NumberFormat.getCurrencyInstance(Locale.getDefault()).format(amount);
     }
 }
