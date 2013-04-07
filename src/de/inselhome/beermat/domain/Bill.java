@@ -1,11 +1,13 @@
 package de.inselhome.beermat.domain;
 
-import junit.framework.Assert;
-
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class Bill {
+import static junit.framework.Assert.assertNotNull;
+
+public class Bill implements Serializable {
 
     private List<BillPosition> positions;
 
@@ -14,16 +16,20 @@ public class Bill {
     }
 
     public void addBillPosition(BillPosition billPosition) {
-        Assert.assertNotNull("Cannot add empty bill position", billPosition);
+        assertNotNull("Cannot add empty bill position", billPosition);
         positions.add(billPosition);
     }
 
     public void removeBillPosition(BillPosition billPosition) {
-        Assert.assertNotNull("Cannot remove empty bill position", billPosition);
+        assertNotNull("Cannot remove empty bill position", billPosition);
 
         if (positions.contains(billPosition)) {
             positions.remove(billPosition);
         }
+    }
+
+    public List<BillPosition> getImmutableBillPositions() {
+        return Collections.unmodifiableList(positions);
     }
 
     public double sum() {

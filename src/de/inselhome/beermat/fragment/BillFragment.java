@@ -1,24 +1,26 @@
 package de.inselhome.beermat.fragment;
 
-import android.app.Fragment;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.actionbarsherlock.app.SherlockFragment;
 import de.inselhome.beermat.R;
 import de.inselhome.beermat.domain.BillPosition;
-import de.inselhome.beermat.test.TestData;
 import de.inselhome.beermat.widget.adapters.BillPositionAdapter;
-import junit.framework.Assert;
 
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 
-public class BillFragment extends Fragment implements BillPositionAdapter.ActionHandler {
+import static junit.framework.Assert.assertNotNull;
 
-    public interface ActionHandler {
+public class BillFragment extends SherlockFragment implements BillPositionAdapter.ActionHandler {
+
+    public interface FragmentCallback {
         void onRemoveBillPosition(BillPosition billPosition);
 
         void onIncreaseBillPosition(BillPosition billPosition);
@@ -26,9 +28,11 @@ public class BillFragment extends Fragment implements BillPositionAdapter.Action
         void onDecreaseBillPosition(BillPosition billPosition);
 
         void onDetailClick(BillPosition billPosition);
+
+        List<BillPosition> getBillPositions();
     }
 
-    private ActionHandler actionHandler;
+    private FragmentCallback fragmentCallback;
     private BillPositionAdapter billPositionAdapter;
 
     private ListView list;
@@ -36,21 +40,50 @@ public class BillFragment extends Fragment implements BillPositionAdapter.Action
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-
-        billPositionAdapter = new BillPositionAdapter(getActivity(), this, TestData.createBillPositionList());
-
-        View view = inflater.inflate(R.layout.fragment_bill, container, false);
-        list = (ListView) view.findViewById(R.id.list);
-        list.setAdapter(billPositionAdapter);
-
-        sumView = (TextView) view.findViewById(R.id.sum);
-
-        return view;
+        return inflater.inflate(R.layout.fragment_bill, container, false);
     }
 
-    public void setActionHandler(final ActionHandler actionHandler) {
-        Assert.assertNotNull(actionHandler);
-        this.actionHandler = actionHandler;
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        Activity activity = getSherlockActivity();
+        if (activity instanceof FragmentCallback) {
+            setFragmentCallback((FragmentCallback) activity);
+            setBillPositionAdapter(new BillPositionAdapter(activity, this));
+            updateBillPositionList();
+            return;
+        }
+
+        throw new IllegalArgumentException("Parent Activity must implement BillFragment.FragmentCallback!");
+    }
+
+    private void setBillPositionAdapter(BillPositionAdapter billPositionAdapter) {
+        this.billPositionAdapter = billPositionAdapter;
+
+        ListView list = (ListView) getView().findViewById(R.id.list);
+        list.setAdapter(billPositionAdapter);
+    }
+
+    private BillPositionAdapter getBillPositionAdapter() {
+        return billPositionAdapter;
+    }
+
+    public void setFragmentCallback(final FragmentCallback fragmentCallback) {
+        assertNotNull("FragmentCallback must not be null!", fragmentCallback);
+        this.fragmentCallback = fragmentCallback;
+    }
+
+    public void updateBillPositionList() {
+        List<BillPosition> billPositions = fragmentCallback.getBillPositions();
+
+        if (billPositions != null && !billPositions.isEmpty()) {
+            for (BillPosition billPosition: billPositions) {
+                billPositionAdapter.add(billPosition);
+            }
+
+            sum();
+        }
     }
 
     public void addBillPosition(final BillPosition billPosition) {
@@ -64,32 +97,34 @@ public class BillFragment extends Fragment implements BillPositionAdapter.Action
 
     @Override
     public void onDecreaseClick(final BillPosition billPosition) {
-        actionHandler.onDecreaseBillPosition(billPosition);
+        fragmentCallback.onDecreaseBillPosition(billPosition);
         billPositionAdapter.notifyDataSetChanged();
         sum();
     }
 
     @Override
     public void onIncreaseClick(final BillPosition billPosition) {
-        actionHandler.onIncreaseBillPosition(billPosition);
+        fragmentCallback.onIncreaseBillPosition(billPosition);
         billPositionAdapter.notifyDataSetChanged();
         sum();
     }
 
     @Override
     public void onDetailClick(final BillPosition billPosition) {
-        actionHandler.onDetailClick(billPosition);
+        fragmentCallback.onDetailClick(billPosition);
     }
 
     public void sum() {
         double sum = 0;
+
+        TextView sumView = (TextView) getView().findViewById(R.id.sum);
 
         for (int i = 0; i < billPositionAdapter.getCount(); i++) {
             BillPosition bp = (BillPosition) billPositionAdapter.getItem(i);
             sum += bp.sum();
         }
 
-        sumView.setText("Summe: " + formatAmount(sum));
+        sumView.setText(formatAmount(sum));
     }
 
     public void removeAllItems() {

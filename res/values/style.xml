@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Beermat.Panel" parent="android:Theme.Panel">
+        <item name="android:paddingLeft">3dp</item>
+        <item name="android:paddingRight">3dp</item>
+    </style>
+
+    <style name="Beermat.ListItem" parent="android:Theme.Panel">
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="Beermat.ListCell" parent="Beermat.Panel">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@drawable/button_selector</item>
+    </style>
+
+    <style name="Beermat.Text" parent="android:TextAppearance.DeviceDefault">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textStyle">normal</item>
+        <item name="de.inselhome.beermat:custom_font">ArchitectsDaughter.ttf</item>
+    </style>
+
+    <style name="Beermat.Text.Bigger" parent="Beermat.Text">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Beermat.Button" parent="android:Theme.Panel">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+</resources>

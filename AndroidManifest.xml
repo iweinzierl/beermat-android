@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="de.inselhome.beermat"
+          android:installLocation="preferExternal"
           android:versionCode="1"
           android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="15"/>
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
+    <uses-sdk android:minSdkVersion="10" android:maxSdkVersion="17" android:targetSdkVersion="14"/>
+    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher"
+                 android:theme="@style/Theme.Sherlock.Light.DarkActionBar">
         <activity android:name="Beermat"
                   android:label="@string/app_name">
             <intent-filter>

@@ -5,14 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 import de.inselhome.beermat.R;
 import de.inselhome.beermat.domain.BillPosition;
-import junit.framework.Assert;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static junit.framework.Assert.assertNotNull;
 
 public class BillPositionAdapter extends BaseAdapter {
 
@@ -28,10 +29,10 @@ public class BillPositionAdapter extends BaseAdapter {
     private final ActionHandler actionHandler;
     private List<BillPosition> billPositions;
 
-    public BillPositionAdapter(final Context context, final ActionHandler actionHandler, final List<BillPosition> billPositions) {
+    public BillPositionAdapter(final Context context, final ActionHandler actionHandler) {
         this.context = context;
         this.actionHandler = actionHandler;
-        setBillPositions(billPositions);
+        this.billPositions = new ArrayList<BillPosition>(0);
     }
 
     @Override
@@ -73,10 +74,12 @@ public class BillPositionAdapter extends BaseAdapter {
         TextView amount = (TextView) view.findViewById(R.id.amount);
         amount.setText(String.valueOf(bp.getAmount()));
 
-        Button decrease = (Button) view.findViewById(R.id.decrease);
-        Button increase = (Button) view.findViewById(R.id.increase);
+        View decrease = view.findViewById(R.id.decrease);
+        View increase = view.findViewById(R.id.increase);
 
-        description.setOnClickListener(new View.OnClickListener() {
+        View itemContainer = view.findViewById(R.id.item_container);
+
+        itemContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 actionHandler.onDetailClick(bp);
@@ -113,14 +116,14 @@ public class BillPositionAdapter extends BaseAdapter {
     }
 
     public void add(final BillPosition billPosition) {
-        Assert.assertNotNull(billPosition);
+        assertNotNull(billPosition);
         billPositions.add(billPosition);
         setBillPositions(billPositions);
         notifyDataSetChanged();
     }
 
     public void remove(final BillPosition billPosition) {
-        Assert.assertNotNull(billPosition);
+        assertNotNull(billPosition);
         if (billPositions.contains(billPosition)) {
             billPositions.remove(billPosition);
             setBillPositions(billPositions);

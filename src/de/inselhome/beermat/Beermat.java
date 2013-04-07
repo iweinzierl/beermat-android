@@ -1,37 +1,48 @@
 package de.inselhome.beermat;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.os.Bundle;
-
-import android.view.Menu;
-import android.view.MenuItem;
-
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import de.inselhome.beermat.domain.Bill;
 import de.inselhome.beermat.domain.BillPosition;
 import de.inselhome.beermat.fragment.BillFragment;
 import de.inselhome.beermat.intent.EditBillPositionIntent;
 import de.inselhome.beermat.intent.NewBillPositionIntent;
+import de.inselhome.beermat.test.TestData;
 
-public class Beermat extends Activity implements BillFragment.ActionHandler {
+import java.util.List;
 
+public class Beermat extends SherlockFragmentActivity implements BillFragment.FragmentCallback {
+
+    private static final String BUNDLE_BILL = "bundle.save.instance.state.bill";
+
+    private Bill bill;
     private BillFragment billFragment;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_beermat);
 
-        billFragment = buildBillFragment();
-        getFragmentManager().beginTransaction().add(R.id.billFragment, billFragment).commit();
+        bill = setupBill(savedInstanceState);
+
+            setContentView(R.layout.activity_beermat);
+            billFragment = setupBillFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.billFragment, billFragment).commit();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle saveInstanceState) {
+        super.onSaveInstanceState(saveInstanceState);
+        saveInstanceState.putSerializable(BUNDLE_BILL, bill);
     }
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
-        getMenuInflater().inflate(R.menu.bill, menu);
+        getSupportMenuInflater().inflate(R.menu.bill, menu);
         return true;
     }
 
@@ -83,11 +94,31 @@ public class Beermat extends Activity implements BillFragment.ActionHandler {
         }
     }
 
-    private BillFragment buildBillFragment() {
+    private Bill setupBill(Bundle savedInstanceState) {
+        Bill bill;
+
+        if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_BILL)) {
+            bill = (Bill) savedInstanceState.get(BUNDLE_BILL);
+        }
+        else {
+            bill = new Bill();
+            for (BillPosition billPosition: TestData.createBillPositionList()) {
+                bill.addBillPosition( billPosition);
+            }
+        }
+
+        return bill;
+    }
+
+    private BillFragment setupBillFragment() {
         BillFragment billFragment = new BillFragment();
         billFragment.setArguments(getIntent().getExtras());
-        billFragment.setActionHandler(this);
         return billFragment;
+    }
+
+    @Override
+    public List<BillPosition> getBillPositions() {
+        return bill.getImmutableBillPositions();
     }
 
     @Override

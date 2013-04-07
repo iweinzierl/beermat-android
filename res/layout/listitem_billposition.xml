@@ -1,27 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              style="@style/Beermat.ListItem"
               android:orientation="horizontal"
+              android:baselineAligned="false"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <Button android:id="@+id/decrease"
-            android:text="( - )"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
-
-    <TextView android:id="@+id/description"
-            android:layout_height="wrap_content"
+    <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_gravity="fill_horizontal"/>
+            android:layout_height="wrap_content">
 
-    <TextView android:id="@+id/amount"
-            android:paddingRight="10dp"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
+        <ImageButton
+                style="@style/Beermat.Button"
+                android:id="@+id/decrease"
+                android:contentDescription="@string/empty_content_description"
+                android:background="@drawable/remove"
+                android:focusable="false"/>
+    </LinearLayout>
 
-    <Button android:id="@+id/increase"
-            android:text="( + )"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
+    <LinearLayout
+            style="@style/Beermat.ListCell"
+            android:id="@+id/item_container"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
 
-</GridLayout>
+        <de.inselhome.beermat.widget.CustomTextView
+                style="@style/Beermat.Text"
+                android:id="@+id/description"
+                android:focusable="false"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="fill_horizontal"/>
+
+        <de.inselhome.beermat.widget.CustomTextView
+                style="@style/Beermat.Text"
+                android:id="@+id/amount"
+                android:focusable="false"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <ImageButton android:id="@+id/increase"
+                     android:contentDescription="@string/empty_content_description"
+                     android:background="@drawable/add"
+                     android:layout_height="match_parent"
+                     android:layout_width="match_parent"/>
+
+    </LinearLayout>
+
+</LinearLayout>

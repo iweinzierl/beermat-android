@@ -1,17 +1,20 @@
 package de.inselhome.beermat.test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.inselhome.beermat.domain.BillItem;
 import de.inselhome.beermat.domain.BillPosition;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestData {
 
     public static List<BillPosition> createBillPositionList() {
         List<BillPosition> billPositions = new ArrayList<BillPosition>();
-        billPositions.add(createBillPosition("First item", 1.90d));
-        billPositions.add(createBillPosition("Second item", 2.30d));
+
+        for (int i = 0; i < 15; i++) {
+            billPositions.add(createBillPosition("Item " + i, 1.90d));
+        }
+
         return billPositions;
     }
 

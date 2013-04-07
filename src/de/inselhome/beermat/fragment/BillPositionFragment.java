@@ -1,12 +1,12 @@
 package de.inselhome.beermat.fragment;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import com.actionbarsherlock.app.SherlockFragment;
 import de.inselhome.beermat.R;
 import de.inselhome.beermat.domain.BillItem;
 import de.inselhome.beermat.domain.BillPosition;
@@ -14,7 +14,7 @@ import de.inselhome.beermat.domain.BillPosition;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
-public class BillPositionFragment extends Fragment {
+public class BillPositionFragment extends SherlockFragment {
 
     public interface ActionHandler {
         void onOk(BillPosition billPosition);

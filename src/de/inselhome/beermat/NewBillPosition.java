@@ -1,13 +1,13 @@
 package de.inselhome.beermat;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import de.inselhome.beermat.domain.BillPosition;
 import de.inselhome.beermat.fragment.BillPositionFragment;
 import de.inselhome.beermat.intent.NewBillPositionIntent;
 
-public class NewBillPosition extends Activity implements BillPositionFragment.ActionHandler {
+public class NewBillPosition extends SherlockFragmentActivity implements BillPositionFragment.ActionHandler {
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -15,7 +15,7 @@ public class NewBillPosition extends Activity implements BillPositionFragment.Ac
         setContentView(R.layout.activity_newbillposition);
 
         BillPositionFragment newBillPositionFragment = new BillPositionFragment(this);
-        getFragmentManager().beginTransaction().add(R.id.newBillPositionFragment, newBillPositionFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.newBillPositionFragment, newBillPositionFragment).commit();
     }
 
     @Override
