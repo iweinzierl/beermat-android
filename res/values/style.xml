@@ -5,11 +5,12 @@
         <item name="android:paddingRight">3dp</item>
     </style>
 
-    <style name="Beermat.ListItem" parent="android:Theme.Panel">
+    <style name="Beermat.ListItem" parent="android:Theme">
         <item name="android:gravity">center_vertical</item>
     </style>
 
     <style name="Beermat.ListCell" parent="Beermat.Panel">
+        <item name="android:padding">3dp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:background">@drawable/button_selector</item>
     </style>

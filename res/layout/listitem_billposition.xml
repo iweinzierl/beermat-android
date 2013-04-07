@@ -9,14 +9,18 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-        <ImageButton
-                style="@style/Beermat.Button"
-                android:id="@+id/decrease"
-                android:contentDescription="@string/empty_content_description"
-                android:background="@drawable/remove"
-                android:focusable="false"/>
+        <TextView android:id="@+id/decrease"
+                  android:text="- 1"
+                  android:background="@drawable/button_selector"
+                  android:textSize="30sp"
+                  android:textColor="@color/red_lighter"
+                  android:layout_marginLeft="5dp"
+                  android:layout_marginRight="5dp"
+                  android:layout_height="match_parent"
+                  android:layout_width="match_parent"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -47,13 +51,17 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-        <ImageButton android:id="@+id/increase"
-                     android:contentDescription="@string/empty_content_description"
-                     android:background="@drawable/add"
-                     android:layout_height="match_parent"
-                     android:layout_width="match_parent"/>
+        <TextView android:id="@+id/increase"
+                  android:text="+ 1"
+                  android:textSize="30sp"
+                  android:textColor="@color/green_darker"
+                  android:background="@drawable/button_selector"
+                  android:layout_marginLeft="5dp"
+                  android:layout_marginRight="5dp"
+                  android:layout_height="match_parent"
+                  android:layout_width="match_parent"/>
 
     </LinearLayout>
 
