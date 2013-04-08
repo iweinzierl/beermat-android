@@ -6,6 +6,7 @@ import junit.framework.Assert;
 
 public class BillPosition implements Serializable, Comparable<BillPosition> {
 
+    private long id;
     private BillItem billItem;
     private int amount;
 
@@ -68,5 +69,13 @@ public class BillPosition implements Serializable, Comparable<BillPosition> {
     @Override
     public int compareTo(final BillPosition another) {
         return getBillItem().compareTo(another.getBillItem());
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

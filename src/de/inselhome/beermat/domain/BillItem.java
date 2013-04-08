@@ -6,6 +6,7 @@ import junit.framework.Assert;
 
 public class BillItem implements Serializable, Comparable<BillItem> {
 
+    private long id;
     private String description;
     private double price;
 
@@ -66,5 +67,13 @@ public class BillItem implements Serializable, Comparable<BillItem> {
     @Override
     public int compareTo(final BillItem another) {
         return getDescription().toLowerCase().compareTo(another.getDescription().toLowerCase());
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getId() {
+        return id;
     }
 }

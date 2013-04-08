@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import de.inselhome.beermat.domain.Bill;
+import de.inselhome.beermat.domain.BillItem;
+import de.inselhome.beermat.domain.BillPosition;
 import de.inselhome.beermat.exception.BillDatabaseException;
 
 public class BillRepository extends SQLiteRepository {
@@ -40,6 +42,7 @@ public class BillRepository extends SQLiteRepository {
             }
             else {
                 insertBill(db, bill, values);
+                insertBillPositions(db, bill);
             }
         }
         catch (Exception e) {
@@ -77,5 +80,84 @@ public class BillRepository extends SQLiteRepository {
         Log.d(LOGTAG, String.format("Successfully inserted bill '%s'", billId));
 
         return bill;
+    }
+
+    private Bill insertBillPositions(SQLiteDatabase db, Bill bill) throws BillDatabaseException {
+        for (BillPosition billPosition: bill.getImmutableBillPositions()) {
+            insertBillItem(db, billPosition.getBillItem());
+            BillPosition inserted = insertBillPosition(db, billPosition);
+
+            if (inserted.getId() <= 0) {
+                throw new BillDatabaseException("Unable to insert bill position '" + billPosition.getBillItem()
+                        .getDescription() + "'");
+            }
+
+            insertBillToBillPosition(db, bill, inserted);
+        }
+
+        return bill;
+    }
+
+    private BillPosition insertBillPosition(SQLiteDatabase db, BillPosition billPosition) throws BillDatabaseException {
+        ContentValues values = new ContentValues();
+        values.put("amount", billPosition.getAmount());
+        values.put("billitem_id", billPosition.getBillItem().getId());
+
+        try {
+            long billPositionId = db.insert("billposition", null, values);
+
+            if (billPositionId <= 0) {
+                throw new BillDatabaseException("Unable to insert bill position '" + billPosition.getBillItem()
+                        .getDescription() + "'");
+            }
+
+            billPosition.setId(billPositionId);
+
+            return billPosition;
+        }
+        catch (Exception e) {
+            throw new BillDatabaseException("Unable to insert bill position '" + billPosition.getBillItem()
+                    .getDescription() + "'");
+        }
+    }
+
+    private BillItem insertBillItem(SQLiteDatabase db, BillItem billItem) throws BillDatabaseException {
+        ContentValues values = new ContentValues();
+        values.put("description", billItem.getDescription());
+        values.put("price", billItem.getPrice());
+
+        try {
+            long billItemId = db.insert("billitem", null, values);
+            billItem.setId(billItemId);
+
+            if (billItem.getId() <= 0) {
+                throw new BillDatabaseException("Unable to insert bill item '" + billItem.getDescription() + "'");
+            }
+
+            return billItem;
+        }
+        catch (Exception e) {
+            throw new BillDatabaseException("Unable to insert bill item '" + billItem.getDescription() + "'", e);
+        }
+    }
+
+    private Bill insertBillToBillPosition(SQLiteDatabase db, Bill bill, BillPosition billPosition) throws BillDatabaseException {
+        ContentValues values = new ContentValues();
+        values.put("bill_id", bill.getId());
+        values.put("billposition_id", billPosition.getId());
+
+        try {
+            long id = db.insert("bill_to_billposition", null, values);
+            if (id <= 0) {
+                throw new BillDatabaseException("Unable to insert bill to billposition " + bill.getId() + " <-->" +
+                        billPosition.getId());
+            }
+
+            return bill;
+        }
+        catch(Exception e) {
+            throw new BillDatabaseException("Unable to insert bill to billposition " + bill.getId() + " <-->" +
+                    billPosition.getId(), e);
+        }
     }
 }
