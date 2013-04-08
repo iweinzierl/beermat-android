@@ -3,4 +3,12 @@
     <string name="app_name">beermat.git</string>
     <string name="bill_sum_label">Summe:</string>
     <string name="empty_content_description"> </string>
+
+    <string name="menu_bill_addposition">Neuer Eintrag</string>
+    <string name="menu_bill_savebill">Rechnung speichern</string>
+    <string name="menu_bill_saveprofile">Als Vorlage speichern</string>
+    <string name="menu_bill_removeallitems">Alle Einträge entfernen</string>
+    <string name="menu_bill_removeallamounts">Alle Einträge zurücksetzen</string>
+    <string name="menu_bill_mybills">Meine Rechnungen</string>
+    <string name="menu_bill_myprofiles">Meine Vorlagen</string>
 </resources>

@@ -4,14 +4,18 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import de.inselhome.beermat.domain.Bill;
 import de.inselhome.beermat.domain.BillPosition;
+import de.inselhome.beermat.exception.BillDatabaseException;
 import de.inselhome.beermat.fragment.BillFragment;
 import de.inselhome.beermat.intent.EditBillPositionIntent;
 import de.inselhome.beermat.intent.NewBillPositionIntent;
+import de.inselhome.beermat.persistence.BillRepository;
 import de.inselhome.beermat.test.TestData;
 
 import java.util.List;
@@ -19,6 +23,7 @@ import java.util.List;
 public class Beermat extends SherlockFragmentActivity implements BillFragment.FragmentCallback {
 
     private static final String BUNDLE_BILL = "bundle.save.instance.state.bill";
+    private static final String LOGTAG = "[beermat] Beermat";
 
     private Bill bill;
     private BillFragment billFragment;
@@ -54,6 +59,10 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
                 onAddBillPosition();
                 return true;
 
+            case R.id.saveBill:
+                onSaveBill();
+                return true;
+
             case R.id.saveProfile:
                 onSaveProfile();
                 return true;
@@ -64,6 +73,14 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
 
             case R.id.resetAmounts:
                 onResetAmounts();
+                return true;
+
+            case R.id.myBills:
+                onMyBills();
+                return true;
+
+            case R.id.myProfiles:
+                onMyProfiles();
                 return true;
 
             default:
@@ -90,7 +107,6 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
                     editBillPosition(i.getOldBillPosition(), i.getNewBillPosition());
                     return;
                 }
-
         }
     }
 
@@ -156,6 +172,18 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
         billFragment.addBillPosition(newBP);
     }
 
+    private void onSaveBill() {
+        BillRepository billRepository = BillRepository.getInstance(this);
+        bill.setName("Test bill");
+        try {
+            Bill newBill = billRepository.save(bill);
+            Toast.makeText(this, "Saved bill with id " + newBill.getId(), Toast.LENGTH_LONG).show();
+        } catch (BillDatabaseException e) {
+            Log.e(LOGTAG, e.getMessage(), e);
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void onSaveProfile() {
         // TODO
     }
@@ -184,5 +212,13 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
             public void onClick(final DialogInterface dialogInterface, final int i) {
             }
         }).show();
+    }
+
+    private void onMyBills() {
+        // TODO
+    }
+
+    private void onMyProfiles() {
+        // TODO
     }
 }

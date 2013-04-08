@@ -31,7 +31,6 @@ public class BillRepository extends SQLiteRepository {
         values.put("name", bill.getName());
 
         SQLiteDatabase db = null;
-        long billId = 0;
 
         try {
             db = getWritableDatabase();
@@ -55,11 +54,10 @@ public class BillRepository extends SQLiteRepository {
             }
         }
 
-        if (billId <= 0) {
+        if (bill.getId() <= 0) {
             throw new BillDatabaseException("Unable to save bill: " + bill);
         }
 
-        bill.setId(billId);
         return bill;
     }
 

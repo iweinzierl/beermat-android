@@ -3,19 +3,31 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/addBillPosition"
-          android:title="Add"
+          android:title="@string/menu_bill_addposition"
+          android:showAsAction="ifRoom|withText"/>
+
+    <item android:id="@+id/saveBill"
+          android:title="@string/menu_bill_savebill"
           android:showAsAction="ifRoom|withText"/>
 
     <item android:id="@+id/saveProfile"
-          android:title="Save Profile"
+          android:title="@string/menu_bill_saveprofile"
           android:showAsAction="ifRoom|withText"/>
 
     <item android:id="@+id/resetItems"
-          android:title="Reset Items"
+          android:title="@string/menu_bill_removeallitems"
           android:showAsAction="ifRoom|withText"/>
 
     <item android:id="@+id/resetAmounts"
-          android:title="Reset Amounts"
+          android:title="@string/menu_bill_removeallamounts"
+          android:showAsAction="ifRoom|withText"/>
+
+    <item android:id="@+id/myBills"
+          android:title="@string/menu_bill_mybills"
+          android:showAsAction="ifRoom|withText"/>
+
+    <item android:id="@+id/myProfiles"
+          android:title="@string/menu_bill_myprofiles"
           android:showAsAction="ifRoom|withText"/>
 
 </menu>
