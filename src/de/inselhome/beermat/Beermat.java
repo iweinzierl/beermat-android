@@ -17,12 +17,17 @@ import de.inselhome.beermat.intent.EditBillPositionIntent;
 import de.inselhome.beermat.intent.NewBillPositionIntent;
 import de.inselhome.beermat.persistence.BillRepository;
 import de.inselhome.beermat.test.TestData;
+import org.json.JSONException;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class Beermat extends SherlockFragmentActivity implements BillFragment.FragmentCallback {
 
     private static final String BUNDLE_BILL = "bundle.save.instance.state.bill";
+    private static final String LAST_BILL = "last_bill.json";
     private static final String LOGTAG = "[beermat] Beermat";
 
     private Bill bill;
@@ -34,9 +39,9 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
 
         bill = setupBill(savedInstanceState);
 
-            setContentView(R.layout.activity_beermat);
-            billFragment = setupBillFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.billFragment, billFragment).commit();
+        setContentView(R.layout.activity_beermat);
+        billFragment = setupBillFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.billFragment, billFragment).commit();
     }
 
     @Override
@@ -49,6 +54,14 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
     public boolean onCreateOptionsMenu(final Menu menu) {
         getSupportMenuInflater().inflate(R.menu.bill, menu);
         return true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        Log.i(LOGTAG, "Pause beermat app");
+        billToDisk(bill);
     }
 
     @Override
@@ -115,11 +128,10 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
 
         if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_BILL)) {
             bill = (Bill) savedInstanceState.get(BUNDLE_BILL);
-        }
-        else {
+        } else {
             bill = new Bill();
-            for (BillPosition billPosition: TestData.createBillPositionList()) {
-                bill.addBillPosition( billPosition);
+            for (BillPosition billPosition : TestData.createBillPositionList()) {
+                bill.addBillPosition(billPosition);
             }
         }
 
@@ -220,5 +232,36 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
 
     private void onMyProfiles() {
         // TODO
+    }
+
+    private void billToDisk(Bill bill) {
+        File appDir = getFilesDir();
+        File lastBill = new File(appDir, LAST_BILL);
+
+        FileWriter writer = null;
+
+        try {
+            writer = new FileWriter(lastBill);
+            writer.write(Bill.toJson(bill).toString());
+            writer.flush();
+        } catch (IOException e) {
+            Log.e(LOGTAG, "Unable to persist last bill to disk.", e);
+        }
+        catch (JSONException e) {
+            Log.e(LOGTAG, "Unable to persist last bill to disk - cannot convert to json.", e);
+        }
+        finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+    }
+
+    private Bill billFromDisk() {
+        // TODO
+        return null;
     }
 }

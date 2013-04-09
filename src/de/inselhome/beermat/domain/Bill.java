@@ -1,5 +1,9 @@
 package de.inselhome.beermat.domain;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +21,7 @@ public class Bill implements Serializable {
 
     public Bill() {
         positions = new ArrayList<BillPosition>();
+        date = new Date();
     }
 
     public long getId() {
@@ -74,5 +79,21 @@ public class Bill implements Serializable {
     @Override
     public String toString() {
         return "Bill=[" + id + ", " + name + ", " + date + "]";
+    }
+
+    public static JSONObject toJson(Bill bill) throws JSONException {
+        JSONObject obj = new JSONObject();
+        obj.put("id", bill.getId());
+        obj.put("name", bill.getName());
+        obj.put("date", bill.getDate().getTime());
+
+        JSONArray positionsArr = new JSONArray();
+        for (BillPosition position: bill.getImmutableBillPositions()) {
+            positionsArr.put(BillPosition.toJson(position));
+        }
+
+        obj.put("positions", positionsArr);
+
+        return obj;
     }
 }
