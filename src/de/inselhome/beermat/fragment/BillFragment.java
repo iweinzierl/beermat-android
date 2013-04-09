@@ -58,6 +58,19 @@ public class BillFragment extends SherlockFragment implements BillPositionAdapte
         throw new IllegalArgumentException("Parent Activity must implement BillFragment.FragmentCallback!");
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Activity activity = getSherlockActivity();
+        if (activity instanceof FragmentCallback) {
+            setFragmentCallback((FragmentCallback) activity);
+            setBillPositionAdapter(new BillPositionAdapter(activity, this));
+            updateBillPositionList();
+            return;
+        }
+    }
+
     private void setBillPositionAdapter(BillPositionAdapter billPositionAdapter) {
         this.billPositionAdapter = billPositionAdapter;
 
@@ -78,7 +91,7 @@ public class BillFragment extends SherlockFragment implements BillPositionAdapte
         List<BillPosition> billPositions = fragmentCallback.getBillPositions();
 
         if (billPositions != null && !billPositions.isEmpty()) {
-            for (BillPosition billPosition: billPositions) {
+            for (BillPosition billPosition : billPositions) {
                 billPositionAdapter.add(billPosition);
             }
 

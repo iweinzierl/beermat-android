@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.gson.Gson;
 import de.inselhome.beermat.domain.Bill;
 import de.inselhome.beermat.domain.BillPosition;
 import de.inselhome.beermat.exception.BillDatabaseException;
@@ -17,11 +18,14 @@ import de.inselhome.beermat.intent.EditBillPositionIntent;
 import de.inselhome.beermat.intent.NewBillPositionIntent;
 import de.inselhome.beermat.persistence.BillRepository;
 import de.inselhome.beermat.test.TestData;
-import org.json.JSONException;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 public class Beermat extends SherlockFragmentActivity implements BillFragment.FragmentCallback {
@@ -62,6 +66,14 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
 
         Log.i(LOGTAG, "Pause beermat app");
         billToDisk(bill);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.i(LOGTAG, "Resume beermat app");
+        bill = billFromDisk();
     }
 
     @Override
@@ -234,23 +246,24 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
         // TODO
     }
 
-    private void billToDisk(Bill bill) {
+    private File getBillFile() {
         File appDir = getFilesDir();
-        File lastBill = new File(appDir, LAST_BILL);
+        return new File(appDir, LAST_BILL);
+    }
 
+    private void billToDisk(Bill bill) {
+        File lastBill = getBillFile();
         FileWriter writer = null;
 
         try {
             writer = new FileWriter(lastBill);
-            writer.write(Bill.toJson(bill).toString());
+
+            String jsonStr = new Gson().toJson(bill);
+            writer.write(jsonStr);
             writer.flush();
         } catch (IOException e) {
             Log.e(LOGTAG, "Unable to persist last bill to disk.", e);
-        }
-        catch (JSONException e) {
-            Log.e(LOGTAG, "Unable to persist last bill to disk - cannot convert to json.", e);
-        }
-        finally {
+        } finally {
             if (writer != null) {
                 try {
                     writer.close();
@@ -261,7 +274,29 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
     }
 
     private Bill billFromDisk() {
-        // TODO
+        File lastBill = getBillFile();
+        if (!lastBill.exists() || !lastBill.canRead()) {
+            return null;
+        }
+
+        InputStream inputStream = null;
+
+        try {
+            inputStream = new FileInputStream(lastBill);
+            InputStreamReader reader = new InputStreamReader(inputStream);
+
+            return new Gson().fromJson(reader, Bill.class);
+        } catch (FileNotFoundException e) {
+            Log.e(LOGTAG, "Unable to read bill from disk.", e);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+
         return null;
     }
 }

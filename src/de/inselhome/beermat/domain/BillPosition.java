@@ -80,13 +80,4 @@ public class BillPosition implements Serializable, Comparable<BillPosition> {
     public void setId(long id) {
         this.id = id;
     }
-
-    public static JSONObject toJson(BillPosition billPosition) throws JSONException {
-        JSONObject obj = new JSONObject();
-        obj.put("id", billPosition.getId());
-        obj.put("amount", billPosition.getAmount());
-        obj.put("billItem", BillItem.toJson(billPosition.getBillItem()));
-
-        return obj;
-    }
 }

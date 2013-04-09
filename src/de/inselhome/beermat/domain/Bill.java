@@ -80,20 +80,4 @@ public class Bill implements Serializable {
     public String toString() {
         return "Bill=[" + id + ", " + name + ", " + date + "]";
     }
-
-    public static JSONObject toJson(Bill bill) throws JSONException {
-        JSONObject obj = new JSONObject();
-        obj.put("id", bill.getId());
-        obj.put("name", bill.getName());
-        obj.put("date", bill.getDate().getTime());
-
-        JSONArray positionsArr = new JSONArray();
-        for (BillPosition position: bill.getImmutableBillPositions()) {
-            positionsArr.put(BillPosition.toJson(position));
-        }
-
-        obj.put("positions", positionsArr);
-
-        return obj;
-    }
 }

@@ -78,13 +78,4 @@ public class BillItem implements Serializable, Comparable<BillItem> {
     public long getId() {
         return id;
     }
-
-    public static JSONObject toJson(BillItem billItem) throws JSONException {
-        JSONObject obj = new JSONObject();
-        obj.put("id", billItem.getId());
-        obj.put("description", billItem.getDescription());
-        obj.put("price", billItem.getPrice());
-
-        return obj;
-    }
 }
