@@ -22,6 +22,10 @@
         <item name="de.inselhome.beermat:custom_font">ArchitectsDaughter.ttf</item>
     </style>
 
+    <style name="Beermat.Text.Smaller" parent="Beermat.Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="Beermat.Text.Bigger" parent="Beermat.Text">
         <item name="android:textSize">18sp</item>
     </style>

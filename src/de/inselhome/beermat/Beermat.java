@@ -234,7 +234,8 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
     }
 
     private void onMyBills() {
-        // TODO
+        Intent i = new Intent(this, MyBillList.class);
+        startActivity(i);
     }
 
     private void onMyProfiles() {

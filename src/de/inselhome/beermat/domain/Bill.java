@@ -81,7 +81,6 @@ public class Bill implements Serializable {
         return sum;
     }
 
-
     @Override
     public String toString() {
         return "Bill=[" + id + ", " + name + ", " + date + "]";
