@@ -12,11 +12,13 @@
     <string name="menu_bill_mybills">Meine Rechnungen</string>
     <string name="menu_bill_myprofiles">Meine Vorlagen</string>
 
+    <string name="newbillposition_title">Neues Item hinzufügen</string>
     <string name="newbillposition_description">Beschreibung</string>
     <string name="newbillposition_price">Preis</string>
     <string name="newbillposition_ok">Einfügen</string>
     <string name="newbillposition_cancel">Abbrechen</string>
 
+    <string name="editbillposition_title">Bestehendes Item ändern</string>
     <string name="editbillposition_description">Beschreibung</string>
     <string name="editbillposition_price">Preis</string>
     <string name="editbillposition_ok">Speichern</string>
