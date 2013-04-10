@@ -41,7 +41,7 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        bill = setupBill(savedInstanceState);
+        bill = setupBill();
 
         setContentView(R.layout.activity_beermat);
         billFragment = setupBillFragment();
@@ -66,14 +66,6 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
 
         Log.i(LOGTAG, "Pause beermat app");
         billToDisk(bill);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        Log.i(LOGTAG, "Resume beermat app");
-        bill = billFromDisk();
     }
 
     @Override
@@ -135,13 +127,12 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
         }
     }
 
-    private Bill setupBill(Bundle savedInstanceState) {
-        Bill bill;
+    private Bill setupBill() {
+        Bill bill = billFromDisk();
 
-        if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_BILL)) {
-            bill = (Bill) savedInstanceState.get(BUNDLE_BILL);
-        } else {
+        if (bill == null) {
             bill = new Bill();
+
             for (BillPosition billPosition : TestData.createBillPositionList()) {
                 bill.addBillPosition(billPosition);
             }
@@ -188,12 +179,14 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
     }
 
     private void addBillPosition(final BillPosition billPosition) {
-        billFragment.addBillPosition(billPosition);
+        bill.addBillPosition(billPosition);
+        billFragment.notifyDataChanged();
     }
 
     private void editBillPosition(final BillPosition oldBP, final BillPosition newBP) {
-        billFragment.removeBillPosition(oldBP);
-        billFragment.addBillPosition(newBP);
+        bill.removeBillPosition(oldBP);
+        bill.addBillPosition(newBP);
+        billFragment.notifyDataChanged();
     }
 
     private void onSaveBill() {
@@ -216,7 +209,8 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
         new AlertDialog.Builder(this).setMessage("Remove all items from bill?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialogInterface, final int i) {
-                billFragment.removeAllItems();
+                bill.removeAllBillPositions();
+                billFragment.notifyDataChanged();
             }
         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
@@ -229,7 +223,8 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
         new AlertDialog.Builder(this).setMessage("Reset all amounts of bill?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialogInterface, final int i) {
-                billFragment.resetAmounts();
+                bill.resetBillPositionAmounts();
+                billFragment.notifyDataChanged();
             }
         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override

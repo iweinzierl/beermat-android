@@ -1,9 +1,5 @@
 package de.inselhome.beermat.domain;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,6 +54,16 @@ public class Bill implements Serializable {
 
         if (positions.contains(billPosition)) {
             positions.remove(billPosition);
+        }
+    }
+
+    public void removeAllBillPositions() {
+        positions.clear();
+    }
+
+    public void resetBillPositionAmounts() {
+        for (BillPosition billPosition: positions) {
+            billPosition.setAmount(0);
         }
     }
 

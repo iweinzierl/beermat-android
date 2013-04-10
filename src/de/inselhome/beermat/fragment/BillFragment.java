@@ -58,19 +58,6 @@ public class BillFragment extends SherlockFragment implements BillPositionAdapte
         throw new IllegalArgumentException("Parent Activity must implement BillFragment.FragmentCallback!");
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        Activity activity = getSherlockActivity();
-        if (activity instanceof FragmentCallback) {
-            setFragmentCallback((FragmentCallback) activity);
-            setBillPositionAdapter(new BillPositionAdapter(activity, this));
-            updateBillPositionList();
-            return;
-        }
-    }
-
     private void setBillPositionAdapter(BillPositionAdapter billPositionAdapter) {
         this.billPositionAdapter = billPositionAdapter;
 
@@ -87,6 +74,21 @@ public class BillFragment extends SherlockFragment implements BillPositionAdapte
         this.fragmentCallback = fragmentCallback;
     }
 
+    public FragmentCallback getFragmentCallback() {
+        return fragmentCallback;
+    }
+
+    public void notifyDataChanged() {
+        BillPositionAdapter adapter = getBillPositionAdapter();
+        adapter.removeAllItems();
+
+        for (BillPosition billPosition: getFragmentCallback().getBillPositions()) {
+            adapter.add(billPosition);
+        }
+
+        sum();
+    }
+
     public void updateBillPositionList() {
         List<BillPosition> billPositions = fragmentCallback.getBillPositions();
 
@@ -97,15 +99,6 @@ public class BillFragment extends SherlockFragment implements BillPositionAdapte
 
             sum();
         }
-    }
-
-    public void addBillPosition(final BillPosition billPosition) {
-        billPositionAdapter.add(billPosition);
-        sum();
-    }
-
-    public void removeBillPosition(final BillPosition billPosition) {
-        billPositionAdapter.remove(billPosition);
     }
 
     @Override
@@ -138,16 +131,6 @@ public class BillFragment extends SherlockFragment implements BillPositionAdapte
         }
 
         sumView.setText(formatAmount(sum));
-    }
-
-    public void removeAllItems() {
-        billPositionAdapter.removeAllItems();
-        sum();
-    }
-
-    public void resetAmounts() {
-        billPositionAdapter.resetAmounts();
-        sum();
     }
 
     private String formatAmount(final double amount) {
