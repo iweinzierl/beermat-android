@@ -14,4 +14,11 @@
 
     <string name="newbillposition_description">Beschreibung</string>
     <string name="newbillposition_price">Preis</string>
+    <string name="newbillposition_ok">Einfügen</string>
+    <string name="newbillposition_cancel">Abbrechen</string>
+
+    <string name="editbillposition_description">Beschreibung</string>
+    <string name="editbillposition_price">Preis</string>
+    <string name="editbillposition_ok">Speichern</string>
+    <string name="editbillposition_cancel">Abbrechen</string>
 </resources>

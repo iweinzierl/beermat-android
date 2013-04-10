@@ -5,22 +5,26 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TextView
-            android:text="Description:"
+    <de.inselhome.beermat.widget.CustomTextView
+            style="@style/Beermat.Text"
+            android:text="@string/editbillposition_description"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"/>
 
     <EditText
+            style="@style/Beermat.Text.Bigger"
             android:id="@+id/description"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
 
-    <TextView
-            android:text="Price:"
+    <de.inselhome.beermat.widget.CustomTextView
+            style="@style/Beermat.Text"
+            android:text="@string/editbillposition_price"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"/>
 
     <EditText
+            style="@style/Beermat.Text.Bigger"
             android:id="@+id/price"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
@@ -31,15 +35,15 @@
             android:layout_height="wrap_content">
 
         <Button
-                android:id="@+id/ok"
-                android:text="OK"
+                android:id="@+id/cancel"
+                android:text="@string/editbillposition_cancel"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         <Button
-                android:id="@+id/cancel"
-                android:text="Cancel"
+                android:id="@+id/ok"
+                android:text="@string/editbillposition_ok"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

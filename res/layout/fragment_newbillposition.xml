@@ -37,15 +37,15 @@
             android:layout_height="wrap_content">
 
         <Button
-                android:id="@+id/ok"
-                android:text="OK"
+                android:id="@+id/cancel"
+                android:text="@string/newbillposition_cancel"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         <Button
-                android:id="@+id/cancel"
-                android:text="Cancel"
+                android:id="@+id/ok"
+                android:text="@string/newbillposition_ok"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
