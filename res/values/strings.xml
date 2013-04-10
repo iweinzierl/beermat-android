@@ -11,4 +11,7 @@
     <string name="menu_bill_removeallamounts">Alle Einträge zurücksetzen</string>
     <string name="menu_bill_mybills">Meine Rechnungen</string>
     <string name="menu_bill_myprofiles">Meine Vorlagen</string>
+
+    <string name="newbillposition_description">Beschreibung</string>
+    <string name="newbillposition_price">Preis</string>
 </resources>
