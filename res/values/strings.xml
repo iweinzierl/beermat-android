@@ -23,4 +23,6 @@
     <string name="editbillposition_price">Preis</string>
     <string name="editbillposition_ok">Speichern</string>
     <string name="editbillposition_cancel">Abbrechen</string>
+
+    <string name="dialog_savebill_name_label">Name der Rechnung:</string>
 </resources>
