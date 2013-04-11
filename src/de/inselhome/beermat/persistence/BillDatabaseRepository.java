@@ -52,6 +52,7 @@ public class BillDatabaseRepository extends SQLiteRepository implements BillRepo
         throw new NotImplementedException("BillDatabaseRepository.get(long) not implemented");
     }
 
+    @Override
     public Bill save(Bill bill) throws BillDatabaseException {
         ContentValues values = new ContentValues(1);
         values.put("name", bill.getName());
@@ -82,6 +83,10 @@ public class BillDatabaseRepository extends SQLiteRepository implements BillRepo
         }
 
         return bill;
+    }
+
+    public void delete(Bill bill) throws BillPersistenceException {
+        throw new NotImplementedException("BillDatabaseRepository.");
     }
 
     private List<BillPosition> getBillPositionByBillId(SQLiteDatabase db, long billId) {

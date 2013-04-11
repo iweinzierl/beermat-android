@@ -25,4 +25,6 @@
     <string name="editbillposition_cancel">Abbrechen</string>
 
     <string name="dialog_savebill_name_label">Name der Rechnung:</string>
+
+    <string name="dialog_bill_delete">Löschen</string>
 </resources>

@@ -50,6 +50,11 @@ public class FileUtils {
         return billData;
     }
 
+    public static File getBillFile(Context context, long id) {
+        File billData = getBillDataDirectory(context);
+        return new File(billData, getFileName(id));
+    }
+
     public static List<String> getOrderedFilenames(File directory) {
         String[] files = directory.list(new FilenameFilter() {
             @Override
@@ -72,5 +77,9 @@ public class FileUtils {
         catch (NumberFormatException e) {
             throw new BillPersistenceException("Unable to parse id from filename: " + fileName, e);
         }
+    }
+
+    private static String getFileName(long id) {
+        return String.valueOf(id) + DATA_FILE_ENDING;
     }
 }

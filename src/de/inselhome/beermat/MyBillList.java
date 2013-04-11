@@ -10,6 +10,7 @@ import de.inselhome.beermat.exception.BillPersistenceException;
 import de.inselhome.beermat.fragment.MyBillListFragment;
 import de.inselhome.beermat.intent.BillDetailIntent;
 import de.inselhome.beermat.persistence.BillFileRepository;
+import de.inselhome.beermat.persistence.BillRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,5 +53,18 @@ public class MyBillList extends SherlockFragmentActivity implements MyBillListFr
     public void onBillSelected(Bill bill) {
         Intent i = new BillDetailIntent(this, bill);
         startActivity(i);
+    }
+
+    @Override
+    public void onDeleteBill(Bill bill) {
+        BillRepository billRepository = BillFileRepository.getInstance(this);
+
+        try {
+            billRepository.delete(bill);
+        } catch (BillPersistenceException e) {
+            Log.e(LOGTAG, "Unable to delete bill " + bill.getId(), e);
+        }
+
+        billListFragment.notifyDataChanged();
     }
 }

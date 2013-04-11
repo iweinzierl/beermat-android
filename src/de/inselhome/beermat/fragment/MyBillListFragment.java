@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockListFragment;
 import de.inselhome.beermat.domain.Bill;
+import de.inselhome.beermat.widget.BillListContextDialogBuilder;
 import de.inselhome.beermat.widget.adapters.BillAdapter;
 
 import java.util.List;
@@ -19,6 +21,8 @@ public class MyBillListFragment extends SherlockListFragment {
         List<Bill> getBills();
 
         void onBillSelected(Bill bill);
+
+        void onDeleteBill(Bill bill);
     }
 
     private FragmentCallback fragmentCallback;
@@ -46,12 +50,29 @@ public class MyBillListFragment extends SherlockListFragment {
         super.onCreate(bundle);
         billAdapter.clear();
         billAdapter.add(getFragmentCallback().getBills());
+
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                MyBillListFragment.this.onItemLongClick((Bill) getListAdapter().getItem(position));
+                return true;
+            }
+        });
     }
 
     @Override
     public void onListItemClick(ListView list, View view, int pos, long id) {
         Log.d(LOGTAG, "Clicked bill at position " + pos);
         getFragmentCallback().onBillSelected((Bill) billAdapter.getItem(pos));
+    }
+
+    private void onItemLongClick(final Bill item) {
+        BillListContextDialogBuilder.build(getActivity(), new BillListContextDialogBuilder.Callback() {
+            @Override
+            public void onDelete() {
+                getFragmentCallback().onDeleteBill(item);
+            }
+        }).show();
     }
 
     public void setFragmentCallback(FragmentCallback fragmentCallback) {

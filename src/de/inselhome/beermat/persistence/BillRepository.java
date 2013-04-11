@@ -13,4 +13,6 @@ public interface BillRepository {
     Bill get(long id) throws BillPersistenceException;
 
     Bill save(Bill bill) throws BillPersistenceException;
+
+    void delete(Bill bill) throws BillPersistenceException;
 }

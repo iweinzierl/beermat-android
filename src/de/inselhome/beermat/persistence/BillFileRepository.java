@@ -1,6 +1,7 @@
 package de.inselhome.beermat.persistence;
 
 import android.content.Context;
+import android.util.Log;
 import com.google.gson.Gson;
 import de.inselhome.beermat.domain.Bill;
 import de.inselhome.beermat.exception.BillPersistenceException;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BillFileRepository implements BillRepository {
+
+    private static final String LOGTAG = "[beermat] BillFileRepository";
 
     private static BillFileRepository INSTANCE;
     private Context context;
@@ -59,6 +62,15 @@ public class BillFileRepository implements BillRepository {
     public Bill get(long id) throws BillPersistenceException {
         File source = buildBillFile(id);
         return readFromFile(source);
+    }
+
+    public void delete(Bill bill) throws BillPersistenceException {
+        if (bill.getId() > 0) {
+            File toDelete = FileUtils.getBillFile(context, bill.getId());
+            if (toDelete.exists() && toDelete.delete()) {
+                Log.i(LOGTAG, "Successfully deleted bill " + bill.getName());
+            }
+        }
     }
 
     private long determineId(Bill bill) throws BillPersistenceException {
