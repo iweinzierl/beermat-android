@@ -19,6 +19,7 @@ import de.inselhome.beermat.intent.NewBillPositionIntent;
 import de.inselhome.beermat.persistence.BillFileRepository;
 import de.inselhome.beermat.persistence.BillRepository;
 import de.inselhome.beermat.test.TestData;
+import de.inselhome.beermat.widget.SaveBillDialogBuilder;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -192,15 +193,20 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
     }
 
     private void onSaveBill() {
-        BillRepository billRepository = BillFileRepository.getInstance(this);
-        bill.setName("Test bill");
-        try {
-            Bill newBill = billRepository.save(bill);
-            Toast.makeText(this, "Saved bill with id " + newBill.getId(), Toast.LENGTH_LONG).show();
-        } catch (BillPersistenceException e) {
-            Log.e(LOGTAG, e.getMessage(), e);
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
+        SaveBillDialogBuilder.build(this, new SaveBillDialogBuilder.SaveListener() {
+            @Override
+            public void onOk(String name) {
+                BillRepository billRepository = BillFileRepository.getInstance(Beermat.this);
+                bill.setName(name);
+                try {
+                    Bill newBill = billRepository.save(bill);
+                    Toast.makeText(Beermat.this, "Saved bill with id " + newBill.getId(), Toast.LENGTH_LONG).show();
+                } catch (BillPersistenceException e) {
+                    Log.e(LOGTAG, e.getMessage(), e);
+                    Toast.makeText(Beermat.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void onSaveProfile() {
