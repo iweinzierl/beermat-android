@@ -1,6 +1,6 @@
 package de.inselhome.beermat.exception;
 
-public class BillDatabaseException extends Exception {
+public class BillDatabaseException extends BillPersistenceException {
 
     public BillDatabaseException(String s) {
         super(s);

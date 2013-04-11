@@ -42,6 +42,12 @@ public class MyBillListFragment extends SherlockListFragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle bundle) {
+        super.onCreate(bundle);
+        billAdapter.add(getFragmentCallback().getBills());
+    }
+
+    @Override
     public void onListItemClick(ListView list, View view, int pos, long id) {
         Log.d(LOGTAG, "Clicked bill at position " + pos);
         getFragmentCallback().onBillSelected((Bill) billAdapter.getItem(pos));

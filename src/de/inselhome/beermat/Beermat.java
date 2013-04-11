@@ -12,10 +12,11 @@ import com.actionbarsherlock.view.MenuItem;
 import com.google.gson.Gson;
 import de.inselhome.beermat.domain.Bill;
 import de.inselhome.beermat.domain.BillPosition;
-import de.inselhome.beermat.exception.BillDatabaseException;
+import de.inselhome.beermat.exception.BillPersistenceException;
 import de.inselhome.beermat.fragment.BillFragment;
 import de.inselhome.beermat.intent.EditBillPositionIntent;
 import de.inselhome.beermat.intent.NewBillPositionIntent;
+import de.inselhome.beermat.persistence.BillFileRepository;
 import de.inselhome.beermat.persistence.BillRepository;
 import de.inselhome.beermat.test.TestData;
 
@@ -190,12 +191,12 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
     }
 
     private void onSaveBill() {
-        BillRepository billRepository = BillRepository.getInstance(this);
+        BillRepository billRepository = BillFileRepository.getInstance(this);
         bill.setName("Test bill");
         try {
             Bill newBill = billRepository.save(bill);
             Toast.makeText(this, "Saved bill with id " + newBill.getId(), Toast.LENGTH_LONG).show();
-        } catch (BillDatabaseException e) {
+        } catch (BillPersistenceException e) {
             Log.e(LOGTAG, e.getMessage(), e);
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
