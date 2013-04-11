@@ -85,4 +85,9 @@ public class BillAdapter extends BaseAdapter {
     private String formatSum(double sum) {
         return NumberFormat.getCurrencyInstance(Locale.getDefault()).format(sum);
     }
+
+    public void clear() {
+        bills.clear();
+        notifyDataSetChanged();
+    }
 }

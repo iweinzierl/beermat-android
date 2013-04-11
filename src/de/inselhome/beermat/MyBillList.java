@@ -53,13 +53,4 @@ public class MyBillList extends SherlockFragmentActivity implements MyBillListFr
         Intent i = new BillDetailIntent(this, bill);
         startActivity(i);
     }
-
-    private void setup() {
-        try {
-            setBillList(BillFileRepository.getInstance(this).getAll());
-            billListFragment.notifyDataChanged();
-        } catch (BillPersistenceException e) {
-            Log.e(LOGTAG, "Unable to read bills from file system", e);
-        }
-    }
 }

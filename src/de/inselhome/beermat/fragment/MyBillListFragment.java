@@ -44,6 +44,7 @@ public class MyBillListFragment extends SherlockListFragment {
     @Override
     public void onActivityCreated(Bundle bundle) {
         super.onCreate(bundle);
+        billAdapter.clear();
         billAdapter.add(getFragmentCallback().getBills());
     }
 
@@ -62,6 +63,7 @@ public class MyBillListFragment extends SherlockListFragment {
     }
 
     public void notifyDataChanged() {
+        billAdapter.clear();
         billAdapter.add(fragmentCallback.getBills());
     }
 }

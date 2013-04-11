@@ -21,7 +21,7 @@ public class FileUtils {
         List<String> filenames = getOrderedFilenames(directory);
         String lastFilename = !filenames.isEmpty() ? filenames.get(filenames.size()-1) : "0" + DATA_FILE_ENDING;
 
-        return getIdFromFileName(lastFilename);
+        return getIdFromFileName(lastFilename) + 1;
     }
 
     public static List<Long> getIds(File directory) {

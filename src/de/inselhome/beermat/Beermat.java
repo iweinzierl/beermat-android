@@ -27,6 +27,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Date;
 import java.util.List;
 
 public class Beermat extends SherlockFragmentActivity implements BillFragment.FragmentCallback {
@@ -210,7 +211,8 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
         new AlertDialog.Builder(this).setMessage("Remove all items from bill?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialogInterface, final int i) {
-                bill.removeAllBillPositions();
+                bill = new Bill();
+                bill.setDate(new Date());
                 billFragment.notifyDataChanged();
             }
         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
