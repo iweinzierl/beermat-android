@@ -67,6 +67,11 @@ public class BillDetail extends SherlockFragmentActivity implements BillFragment
         return bill.getImmutableBillPositions();
     }
 
+    @Override
+    public Bill getBill() {
+        return bill;
+    }
+
     private void editBillPosition(final BillPosition oldBP, final BillPosition newBP) {
         bill.removeBillPosition(oldBP);
         bill.addBillPosition(newBP);

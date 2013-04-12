@@ -156,6 +156,11 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
     }
 
     @Override
+    public Bill getBill() {
+        return bill;
+    }
+
+    @Override
     public void onRemoveBillPosition(final BillPosition billPosition) {
         // TODO implement me
     }
@@ -201,6 +206,7 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
                 try {
                     Bill newBill = billRepository.save(bill);
                     Toast.makeText(Beermat.this, "Saved bill with id " + newBill.getId(), Toast.LENGTH_LONG).show();
+                    billFragment.notifyDataChanged();
                 } catch (BillPersistenceException e) {
                     Log.e(LOGTAG, e.getMessage(), e);
                     Toast.makeText(Beermat.this, e.getMessage(), Toast.LENGTH_LONG).show();

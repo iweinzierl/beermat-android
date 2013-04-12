@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">beermat.git</string>
-    <string name="bill_sum_label">Summe:</string>
     <string name="empty_content_description"> </string>
+
+    <string name="bill_sum_label">Summe:</string>
+    <string name="bill_name_unknown">-- neue Rechnung --</string>
 
     <string name="menu_bill_addposition">Neuer Eintrag</string>
     <string name="menu_bill_savebill">Rechnung speichern</string>

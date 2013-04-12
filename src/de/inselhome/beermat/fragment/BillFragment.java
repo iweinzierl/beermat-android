@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.google.common.base.Strings;
 import de.inselhome.beermat.R;
+import de.inselhome.beermat.domain.Bill;
 import de.inselhome.beermat.domain.BillPosition;
 import de.inselhome.beermat.widget.adapters.BillPositionAdapter;
 
@@ -30,6 +32,8 @@ public class BillFragment extends SherlockFragment implements BillPositionAdapte
         void onDetailClick(BillPosition billPosition);
 
         List<BillPosition> getBillPositions();
+
+        Bill getBill();
     }
 
     private FragmentCallback fragmentCallback;
@@ -51,7 +55,7 @@ public class BillFragment extends SherlockFragment implements BillPositionAdapte
         if (activity instanceof FragmentCallback) {
             setFragmentCallback((FragmentCallback) activity);
             setBillPositionAdapter(new BillPositionAdapter(activity, this));
-            updateBillPositionList();
+            notifyDataChanged();
             return;
         }
 
@@ -86,19 +90,8 @@ public class BillFragment extends SherlockFragment implements BillPositionAdapte
             adapter.add(billPosition);
         }
 
+        setName(getFragmentCallback().getBill().getName());
         sum();
-    }
-
-    public void updateBillPositionList() {
-        List<BillPosition> billPositions = fragmentCallback.getBillPositions();
-
-        if (billPositions != null && !billPositions.isEmpty()) {
-            for (BillPosition billPosition : billPositions) {
-                billPositionAdapter.add(billPosition);
-            }
-
-            sum();
-        }
     }
 
     @Override
@@ -118,6 +111,19 @@ public class BillFragment extends SherlockFragment implements BillPositionAdapte
     @Override
     public void onDetailClick(final BillPosition billPosition) {
         fragmentCallback.onDetailClick(billPosition);
+    }
+
+    public void setName(String name) {
+        TextView nameView = (TextView) getView().findViewById(R.id.name);
+        if (nameView != null) {
+
+            if (Strings.isNullOrEmpty(name)) {
+                nameView.setText(R.string.bill_name_unknown);
+            }
+            else {
+                nameView.setText(name);
+            }
+        }
     }
 
     public void sum() {

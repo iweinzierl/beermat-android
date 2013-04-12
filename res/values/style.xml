@@ -5,6 +5,15 @@
         <item name="android:paddingRight">3dp</item>
     </style>
 
+    <style name="Beermat.Panel.Title" parent="Beermat.Panel">
+        <item name="android:background">@color/grey_dark</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="Beermat.ListItem" parent="android:Theme">
         <item name="android:gravity">center_vertical</item>
     </style>
