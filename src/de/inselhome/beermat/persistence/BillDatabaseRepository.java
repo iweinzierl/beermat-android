@@ -86,7 +86,12 @@ public class BillDatabaseRepository extends SQLiteRepository implements BillRepo
     }
 
     public void delete(Bill bill) throws BillPersistenceException {
-        throw new NotImplementedException("BillDatabaseRepository.");
+        throw new NotImplementedException("BillDatabaseRepository.delete");
+    }
+
+
+    public Bill saveAsProfile(Bill bill) throws BillPersistenceException {
+        throw new NotImplementedException("BillDatabaseRepository.saveAsProfile");
     }
 
     private List<BillPosition> getBillPositionByBillId(SQLiteDatabase db, long billId) {

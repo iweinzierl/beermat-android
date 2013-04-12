@@ -6,7 +6,7 @@ import junit.framework.Assert;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class BillPosition implements Serializable, Comparable<BillPosition> {
+public class BillPosition implements Serializable, Comparable<BillPosition>, Cloneable {
 
     private long id;
     private BillItem billItem;
@@ -79,5 +79,14 @@ public class BillPosition implements Serializable, Comparable<BillPosition> {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    @Override
+    public Object clone() {
+        BillPosition clone = new BillPosition();
+        clone.setAmount(getAmount());
+        clone.setBillItem((BillItem) getBillItem().clone());
+
+        return clone;
     }
 }

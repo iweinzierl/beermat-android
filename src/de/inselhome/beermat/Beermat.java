@@ -216,7 +216,23 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
     }
 
     private void onSaveProfile() {
-        // TODO
+        SaveBillDialogBuilder.build(this, new SaveBillDialogBuilder.SaveListener() {
+            @Override
+            public void onOk(String name) {
+                BillRepository billRepository = BillFileRepository.getInstance(Beermat.this);
+                Bill profile = (Bill) getBill().clone();
+                profile.setName(name);
+
+                try {
+                    Bill newProfile = billRepository.saveAsProfile(profile);
+                    Toast.makeText(Beermat.this, "Saved profile " + newProfile.getName(),
+                            Toast.LENGTH_LONG).show();
+                } catch (BillPersistenceException e) {
+                    Log.e(LOGTAG, e.getMessage(), e);
+                    Toast.makeText(Beermat.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void onResetItems() {

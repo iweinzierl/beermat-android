@@ -8,7 +8,7 @@ import java.util.List;
 
 import static junit.framework.Assert.assertNotNull;
 
-public class Bill implements Serializable {
+public class Bill implements Serializable, Cloneable {
 
     private long id;
     private String name;
@@ -84,5 +84,18 @@ public class Bill implements Serializable {
     @Override
     public String toString() {
         return "Bill=[" + id + ", " + name + ", " + date + "]";
+    }
+
+    @Override
+    public Object clone() {
+        Bill clone = new Bill();
+        clone.setDate((Date) getDate().clone());
+        clone.setName(new String(getName()));
+
+        for (BillPosition billPosition: getImmutableBillPositions()) {
+            clone.addBillPosition((BillPosition) billPosition.clone());
+        }
+
+        return clone;
     }
 }

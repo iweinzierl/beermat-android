@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
-public class BillItem implements Serializable, Comparable<BillItem> {
+public class BillItem implements Serializable, Comparable<BillItem>, Cloneable {
 
     private long id;
     private String description;
@@ -77,5 +77,14 @@ public class BillItem implements Serializable, Comparable<BillItem> {
 
     public long getId() {
         return id;
+    }
+
+    @Override
+    public Object clone() {
+        BillItem clone = new BillItem();
+        clone.setDescription(new String(getDescription()));
+        clone.setPrice(getPrice());
+
+        return clone;
     }
 }

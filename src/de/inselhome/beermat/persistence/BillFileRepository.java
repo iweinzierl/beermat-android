@@ -73,6 +73,38 @@ public class BillFileRepository implements BillRepository {
         }
     }
 
+    @Override
+    public Bill saveAsProfile(Bill bill) throws BillPersistenceException {
+        Bill profile = (Bill) bill.clone();
+
+        File profileDirectory = FileUtils.getProfileDataDirectory(context);
+        long nextId = FileUtils.getNextId(profileDirectory);
+
+        File target = buildProfileFile(nextId);
+        FileWriter writer = null;
+
+        try {
+            Gson gson = new Gson();
+            String json = gson.toJson(profile);
+
+            writer = new FileWriter(target);
+            writer.write(json);
+
+            return profile;
+        } catch (IOException e) {
+            Log.e(LOGTAG, "Unable to write profile to disk", e);
+        }
+        finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException e) {}
+            }
+        }
+
+        return null;
+    }
+
     private long determineId(Bill bill) throws BillPersistenceException {
         if (bill.getId() > 0) {
             return bill.getId();
@@ -89,6 +121,11 @@ public class BillFileRepository implements BillRepository {
     private File buildBillFile(long id) {
         File billData = FileUtils.getBillDataDirectory(context);
         return new File(billData, String.valueOf(id) + FileUtils.DATA_FILE_ENDING);
+    }
+
+    private File buildProfileFile(long id) {
+        File profileData = FileUtils.getProfileDataDirectory(context);
+        return new File(profileData, String.valueOf(id) + FileUtils.DATA_FILE_ENDING);
     }
 
     private void writeToFile(Bill bill, File destination) throws BillPersistenceException {

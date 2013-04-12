@@ -14,6 +14,7 @@ import java.util.List;
 public class FileUtils {
 
     public static final String BILL_DATA_DIRECTORY = "bill_data";
+    public static final String PROFILE_DATA_DIRECTORY = "profile_data";
     public static final String DATA_FILE_ENDING = ".json";
     private static final String LOGTAG = "[beermat] FileUtils";
 
@@ -48,6 +49,15 @@ public class FileUtils {
         }
 
         return billData;
+    }
+
+    public static File getProfileDataDirectory(Context context) {
+        File profileData = new File(context.getFilesDir(), PROFILE_DATA_DIRECTORY);
+        if (!profileData.exists()) {
+            profileData.mkdir();
+        }
+
+        return profileData;
     }
 
     public static File getBillFile(Context context, long id) {
