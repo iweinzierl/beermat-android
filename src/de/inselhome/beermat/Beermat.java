@@ -15,6 +15,7 @@ import de.inselhome.beermat.domain.BillPosition;
 import de.inselhome.beermat.exception.BillPersistenceException;
 import de.inselhome.beermat.fragment.BillFragment;
 import de.inselhome.beermat.intent.EditBillPositionIntent;
+import de.inselhome.beermat.intent.MyBillListIntent;
 import de.inselhome.beermat.intent.MyProfileListIntent;
 import de.inselhome.beermat.intent.NewBillPositionIntent;
 import de.inselhome.beermat.persistence.BillFileRepository;
@@ -129,10 +130,18 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
                     return;
                 }
 
+            case MyBillListIntent.REQUEST_BILL:
+                if (resultCode == RESULT_OK) {
+                    MyBillListIntent i = new MyBillListIntent(data);
+                    loadBill(i.getBill());
+                    return;
+                }
+
             case MyProfileListIntent.REQUEST_PROFILE:
                 if (resultCode == RESULT_OK) {
                     MyProfileListIntent i = new MyProfileListIntent(data);
                     loadProfile(i.getProfile());
+                    return;
                 }
         }
     }
@@ -234,6 +243,7 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
                 BillRepository billRepository = BillFileRepository.getInstance(Beermat.this);
                 Bill profile = (Bill) getBill().clone();
                 profile.setName(name);
+                profile.resetBillPositionAmounts();
 
                 try {
                     Bill newProfile = billRepository.saveAsProfile(profile);
@@ -277,8 +287,8 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
     }
 
     private void onMyBills() {
-        Intent i = new Intent(this, MyBillList.class);
-        startActivity(i);
+        Intent i = new MyBillListIntent(this);
+        startActivityForResult(i, MyBillListIntent.REQUEST_BILL);
     }
 
     private void onMyProfiles() {
@@ -340,10 +350,16 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
         return null;
     }
 
+    private void loadBill(Bill bill) {
+        Bill newBill = (Bill) bill.clone();
+        setBill(newBill);
+    }
+
     private void loadProfile(Bill profile) {
         Bill newBill = (Bill) profile.clone();
         newBill.resetBillPositionAmounts();
         newBill.setId(0);
+        newBill.setName(null);
         setBill(newBill);
     }
 }

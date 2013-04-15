@@ -8,7 +8,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import de.inselhome.beermat.domain.Bill;
 import de.inselhome.beermat.exception.BillPersistenceException;
 import de.inselhome.beermat.fragment.MyBillListFragment;
-import de.inselhome.beermat.intent.BillDetailIntent;
+import de.inselhome.beermat.intent.MyBillListIntent;
 import de.inselhome.beermat.persistence.BillFileRepository;
 import de.inselhome.beermat.persistence.BillRepository;
 
@@ -51,8 +51,9 @@ public class MyBillList extends SherlockFragmentActivity implements MyBillListFr
 
     @Override
     public void onBillSelected(Bill bill) {
-        Intent i = new BillDetailIntent(this, bill);
-        startActivity(i);
+        Intent i = new MyBillListIntent(this, bill);
+        setResult(RESULT_OK, i);
+        finish();
     }
 
     @Override

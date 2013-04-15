@@ -7,7 +7,7 @@ import de.inselhome.beermat.domain.Bill;
 
 public class MyProfileListIntent extends Intent {
 
-    public static final int REQUEST_PROFILE = 100;
+    public static final int REQUEST_PROFILE = 41;
 
     public static final String EXTRA_PROFILE = "extra.myprofilelist.profile";
 
