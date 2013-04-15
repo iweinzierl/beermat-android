@@ -12,6 +12,7 @@ import com.google.common.base.Strings;
 import de.inselhome.beermat.R;
 import de.inselhome.beermat.domain.Bill;
 import de.inselhome.beermat.domain.BillPosition;
+import de.inselhome.beermat.widget.BillPositionContextDialogBuilder;
 import de.inselhome.beermat.widget.adapters.BillPositionAdapter;
 
 import java.text.NumberFormat;
@@ -38,9 +39,6 @@ public class BillFragment extends SherlockFragment implements BillPositionAdapte
 
     private FragmentCallback fragmentCallback;
     private BillPositionAdapter billPositionAdapter;
-
-    private ListView list;
-    private TextView sumView;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
@@ -111,6 +109,16 @@ public class BillFragment extends SherlockFragment implements BillPositionAdapte
     @Override
     public void onDetailClick(final BillPosition billPosition) {
         fragmentCallback.onDetailClick(billPosition);
+    }
+
+    @Override
+    public void onLongPress(final BillPosition billPosition) {
+        BillPositionContextDialogBuilder.build(getActivity(), new BillPositionContextDialogBuilder.Callback() {
+            @Override
+            public void onDelete() {
+                getFragmentCallback().onRemoveBillPosition(billPosition);
+            }
+        }).show();
     }
 
     public void setName(String name) {

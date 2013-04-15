@@ -23,6 +23,8 @@ public class BillPositionAdapter extends BaseAdapter {
         void onIncreaseClick(BillPosition billPosition);
 
         void onDetailClick(BillPosition billPosition);
+
+        void onLongPress(BillPosition billPosition);
     }
 
     private Context context;
@@ -83,6 +85,14 @@ public class BillPositionAdapter extends BaseAdapter {
             @Override
             public void onClick(final View v) {
                 actionHandler.onDetailClick(bp);
+            }
+        });
+
+        itemContainer.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                actionHandler.onLongPress(bp);
+                return true;
             }
         });
 

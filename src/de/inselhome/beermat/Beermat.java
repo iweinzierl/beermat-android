@@ -183,7 +183,8 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
 
     @Override
     public void onRemoveBillPosition(final BillPosition billPosition) {
-        // TODO implement me
+        getBill().removeBillPosition(billPosition);
+        billFragment.notifyDataChanged();
     }
 
     @Override
