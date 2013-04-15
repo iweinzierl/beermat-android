@@ -1,67 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-
-    <de.inselhome.beermat.widget.CustomTextView
-            style="@style/Beermat.Text.ActivityTitle"
-            android:text="@string/editbillposition_title"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
-
-    <LinearLayout
-            android:orientation="vertical"
-            android:padding="10dp"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
 
         <de.inselhome.beermat.widget.CustomTextView
-                style="@style/Beermat.Text"
-                android:text="@string/editbillposition_description"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
-
-        <EditText
-                style="@style/Beermat.Text.Bigger"
-                android:id="@+id/description"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"/>
-
-        <de.inselhome.beermat.widget.CustomTextView
-                style="@style/Beermat.Text"
-                android:text="@string/editbillposition_price"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
-
-        <EditText
-                style="@style/Beermat.Text.Bigger"
-                android:id="@+id/price"
+                style="@style/Beermat.Text.ActivityTitle"
+                android:text="@string/editbillposition_title"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"/>
 
         <LinearLayout
-                android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:padding="10dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent">
 
-            <Button
-                    android:id="@+id/cancel"
-                    android:text="@string/editbillposition_cancel"
-                    android:layout_weight="1"
+            <de.inselhome.beermat.widget.CustomTextView
+                    style="@style/Beermat.Text"
+                    android:text="@string/editbillposition_description"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"/>
+
+            <EditText
+                    style="@style/Beermat.Text.Bigger"
+                    android:id="@+id/description"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+
+            <de.inselhome.beermat.widget.CustomTextView
+                    style="@style/Beermat.Text"
+                    android:text="@string/editbillposition_price"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"/>
+
+            <EditText
+                    style="@style/Beermat.Text.Bigger"
+                    android:id="@+id/price"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
 
-            <Button
-                    android:id="@+id/ok"
-                    android:text="@string/editbillposition_ok"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                <Button
+                        android:id="@+id/cancel"
+                        android:text="@string/editbillposition_cancel"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
 
+                <Button
+                        android:id="@+id/ok"
+                        android:text="@string/editbillposition_ok"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-</LinearLayout>
+        <ImageView
+                android:background="@drawable/teaser_getraenke"
+                android:contentDescription="@string/empty_content_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</ScrollView>
