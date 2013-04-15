@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">beermat.git</string>
+    <string name="empty_content_description"> </string>
+
+    <string name="bill_sum_label">Summe:</string>
+    <string name="bill_name_unknown">-- neue Rechnung --</string>
+
+    <string name="menu_bill_addposition">Neuer Eintrag</string>
+    <string name="menu_bill_savebill">Rechnung speichern</string>
+    <string name="menu_bill_saveprofile">Als Vorlage speichern</string>
+    <string name="menu_bill_removeallitems">Neue Rechnung</string>
+    <string name="menu_bill_removeallamounts">Anzahl zurücksetzen</string>
+    <string name="menu_bill_mybills">Meine Rechnungen</string>
+    <string name="menu_bill_myprofiles">Meine Vorlagen</string>
+
+    <string name="newbillposition_title">Neues Item hinzufügen</string>
+    <string name="newbillposition_description">Beschreibung</string>
+    <string name="newbillposition_price">Preis</string>
+    <string name="newbillposition_ok">Einfügen</string>
+    <string name="newbillposition_cancel">Abbrechen</string>
+
+    <string name="editbillposition_title">Bestehendes Item ändern</string>
+    <string name="editbillposition_description">Beschreibung</string>
+    <string name="editbillposition_price">Preis</string>
+    <string name="editbillposition_ok">Speichern</string>
+    <string name="editbillposition_cancel">Abbrechen</string>
+
+    <string name="dialog_savebill_name_label">Name der Rechnung:</string>
+
+    <string name="dialog_bill_delete">Löschen</string>
+</resources>
