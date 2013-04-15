@@ -2,6 +2,10 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:id="@+id/resetItems"
+          android:title="@string/menu_bill_removeallitems"
+          android:showAsAction="ifRoom|withText"/>
+
     <item android:id="@+id/addBillPosition"
           android:title="@string/menu_bill_addposition"
           android:showAsAction="ifRoom|withText"/>
@@ -12,10 +16,6 @@
 
     <item android:id="@+id/saveProfile"
           android:title="@string/menu_bill_saveprofile"
-          android:showAsAction="ifRoom|withText"/>
-
-    <item android:id="@+id/resetItems"
-          android:title="@string/menu_bill_removeallitems"
           android:showAsAction="ifRoom|withText"/>
 
     <item android:id="@+id/resetAmounts"
