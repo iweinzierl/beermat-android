@@ -23,5 +23,7 @@
                   android:label="My Bill List"/>
         <activity android:name=".BillDetail"
                   android:label="Detail of Bill"/>
+        <activity android:name=".MyProfileList"
+                  android:label="My Profile List"/>
     </application>
 </manifest>

@@ -94,6 +94,11 @@ public class BillDatabaseRepository extends SQLiteRepository implements BillRepo
         throw new NotImplementedException("BillDatabaseRepository.saveAsProfile");
     }
 
+    @Override
+    public List<Bill> getAllProfiles() throws BillPersistenceException {
+        throw new NotImplementedException("BillDatabaseRepository.getAllProfiles");
+    }
+
     private List<BillPosition> getBillPositionByBillId(SQLiteDatabase db, long billId) {
         List<BillPosition> billPositions = new ArrayList<BillPosition>();
 

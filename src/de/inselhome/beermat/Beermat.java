@@ -15,6 +15,7 @@ import de.inselhome.beermat.domain.BillPosition;
 import de.inselhome.beermat.exception.BillPersistenceException;
 import de.inselhome.beermat.fragment.BillFragment;
 import de.inselhome.beermat.intent.EditBillPositionIntent;
+import de.inselhome.beermat.intent.MyProfileListIntent;
 import de.inselhome.beermat.intent.NewBillPositionIntent;
 import de.inselhome.beermat.persistence.BillFileRepository;
 import de.inselhome.beermat.persistence.BillRepository;
@@ -127,6 +128,12 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
                     editBillPosition(i.getOldBillPosition(), i.getNewBillPosition());
                     return;
                 }
+
+            case MyProfileListIntent.REQUEST_PROFILE:
+                if (resultCode == RESULT_OK) {
+                    MyProfileListIntent i = new MyProfileListIntent(data);
+                    loadProfile(i.getProfile());
+                }
         }
     }
 
@@ -158,6 +165,11 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
     @Override
     public Bill getBill() {
         return bill;
+    }
+
+    private void setBill(Bill bill) {
+        this.bill = bill;
+        billFragment.notifyDataChanged();
     }
 
     @Override
@@ -270,7 +282,8 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
     }
 
     private void onMyProfiles() {
-        // TODO
+        Intent i = new MyProfileListIntent(this);
+        startActivityForResult(i, MyProfileListIntent.REQUEST_PROFILE);
     }
 
     private File getBillFile() {
@@ -325,5 +338,12 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
         }
 
         return null;
+    }
+
+    private void loadProfile(Bill profile) {
+        Bill newBill = (Bill) profile.clone();
+        newBill.resetBillPositionAmounts();
+        newBill.setId(0);
+        setBill(newBill);
     }
 }

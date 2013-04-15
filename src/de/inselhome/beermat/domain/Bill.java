@@ -90,7 +90,7 @@ public class Bill implements Serializable, Cloneable {
     public Object clone() {
         Bill clone = new Bill();
         clone.setDate((Date) getDate().clone());
-        clone.setName(new String(getName()));
+        clone.setName(getName());
 
         for (BillPosition billPosition: getImmutableBillPositions()) {
             clone.addBillPosition((BillPosition) billPosition.clone());

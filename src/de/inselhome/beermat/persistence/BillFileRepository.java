@@ -37,7 +37,7 @@ public class BillFileRepository implements BillRepository {
 
     public Bill save(Bill bill) throws BillPersistenceException {
         long id = determineId(bill);
-        File persistTo = buildBillFile(id);
+        File persistTo = buildBillFile(FileUtils.getBillDataDirectory(context), id);
 
         writeToFile(bill, persistTo);
 
@@ -46,7 +46,7 @@ public class BillFileRepository implements BillRepository {
     }
 
     public List<Bill> getAll() throws BillPersistenceException {
-        List<Long> ids = determineIds();
+        List<Long> ids = determineBillIds();
         List<Bill> bills = new ArrayList<Bill>(ids.size());
 
         for (Long id: ids) {
@@ -59,9 +59,19 @@ public class BillFileRepository implements BillRepository {
         return bills;
     }
 
-    public Bill get(long id) throws BillPersistenceException {
-        File source = buildBillFile(id);
+    private Bill get(File directory, long id) throws BillPersistenceException {
+        File source = buildBillFile(directory, id);
         return readFromFile(source);
+    }
+
+    public Bill get(long id) throws BillPersistenceException {
+        File directory = FileUtils.getBillDataDirectory(context);
+        return get(directory, id);
+    }
+
+    public Bill getProfile(long id) throws BillPersistenceException {
+        File directory = FileUtils.getProfileDataDirectory(context);
+        return get(directory, id);
     }
 
     public void delete(Bill bill) throws BillPersistenceException {
@@ -105,6 +115,21 @@ public class BillFileRepository implements BillRepository {
         return null;
     }
 
+    @Override
+    public List<Bill> getAllProfiles() throws BillPersistenceException {
+        List<Long> ids = determineProfileIds();
+        List<Bill> bills = new ArrayList<Bill>(ids.size());
+
+        for (Long id: ids) {
+            Bill bill = getProfile(id);
+            if (bill != null) {
+                bills.add(bill);
+            }
+        }
+
+        return bills;
+    }
+
     private long determineId(Bill bill) throws BillPersistenceException {
         if (bill.getId() > 0) {
             return bill.getId();
@@ -113,14 +138,18 @@ public class BillFileRepository implements BillRepository {
         return FileUtils.getNextId(FileUtils.getBillDataDirectory(context));
     }
 
-    private List<Long> determineIds() {
+    private List<Long> determineBillIds() {
         File billData = FileUtils.getBillDataDirectory(context);
         return FileUtils.getIds(billData);
     }
 
-    private File buildBillFile(long id) {
-        File billData = FileUtils.getBillDataDirectory(context);
-        return new File(billData, String.valueOf(id) + FileUtils.DATA_FILE_ENDING);
+    private List<Long> determineProfileIds() {
+        File profileData = FileUtils.getProfileDataDirectory(context);
+        return FileUtils.getIds(profileData);
+    }
+
+    private File buildBillFile(File dir, long id) {
+        return new File(dir, String.valueOf(id) + FileUtils.DATA_FILE_ENDING);
     }
 
     private File buildProfileFile(long id) {
