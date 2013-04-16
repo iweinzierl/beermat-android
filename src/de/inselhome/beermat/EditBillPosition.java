@@ -7,7 +7,7 @@ import de.inselhome.beermat.domain.BillPosition;
 import de.inselhome.beermat.fragment.EditBillPositionFragment;
 import de.inselhome.beermat.intent.EditBillPositionIntent;
 
-public class EditBillPosition extends SherlockFragmentActivity implements EditBillPositionFragment.ActionHandler {
+public class EditBillPosition extends SherlockFragmentActivity implements EditBillPositionFragment.Callback {
 
     private EditBillPositionFragment editBillPositionFragment;
 
@@ -16,14 +16,19 @@ public class EditBillPosition extends SherlockFragmentActivity implements EditBi
         super.onCreate(bundle);
         setContentView(R.layout.activity_editbillposition);
 
-        editBillPositionFragment = new EditBillPositionFragment(this, getBillPositionFromIntent());
-
-        getSupportFragmentManager().beginTransaction().add(R.id.editBillPositionFragment, editBillPositionFragment).commit();
+        editBillPositionFragment = new EditBillPositionFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.editBillPositionFragment,
+                editBillPositionFragment).commit();
     }
 
     private BillPosition getBillPositionFromIntent() {
         Object obj = getIntent().getSerializableExtra(EditBillPositionIntent.EXTRA_BILLPOSITION_ORIG);
         return obj instanceof BillPosition ? (BillPosition) obj : null;
+    }
+
+    @Override
+    public BillPosition getBillPosition() {
+        return getBillPositionFromIntent();
     }
 
     @Override

@@ -42,6 +42,7 @@
             <EditText
                     style="@style/Beermat.Text.Bigger"
                     android:id="@+id/price"
+                    android:inputType="text"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"/>
 

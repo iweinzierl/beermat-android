@@ -31,4 +31,6 @@
     <string name="dialog_bill_delete">Löschen</string>
 
     <string name="dialog_billposition_delete">Löschen</string>
+
+    <string name="invalid_number_format">Bitte geben Sie eine Zahl ein.</string>
 </resources>
