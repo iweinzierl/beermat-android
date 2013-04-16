@@ -25,7 +25,7 @@
 				(NOT provided) since the library will need to be added to your apk -->
 			<groupId>com.google.android</groupId>
 			<artifactId>support-v4</artifactId>
-			<version>r6</version>
+			<version>r7</version>
 		</dependency>
 		<dependency>
 			<groupId>com.actionbarsherlock</groupId>

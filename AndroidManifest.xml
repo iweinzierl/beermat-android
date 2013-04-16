@@ -4,7 +4,7 @@
           android:installLocation="preferExternal"
           android:versionCode="1"
           android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="10" android:maxSdkVersion="17" android:targetSdkVersion="14"/>
+    <uses-sdk android:minSdkVersion="10" android:maxSdkVersion="17" android:targetSdkVersion="17"/>
     <application android:label="@string/app_name"
                  android:icon="@drawable/beermat_icon"
                  android:theme="@style/Theme.Sherlock.Light.DarkActionBar">
@@ -21,8 +21,6 @@
                   android:label="Edit Bill Position"/>
         <activity android:name=".MyBillList"
                   android:label="My Bill List"/>
-        <activity android:name=".BillDetail"
-                  android:label="Detail of Bill"/>
         <activity android:name=".MyProfileList"
                   android:label="My Profile List"/>
     </application>

@@ -17,8 +17,11 @@ public class EditBillPosition extends SherlockFragmentActivity implements EditBi
         setContentView(R.layout.activity_editbillposition);
 
         editBillPositionFragment = new EditBillPositionFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.editBillPositionFragment,
-                editBillPositionFragment).commit();
+
+        if (bundle == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.editBillPositionFragment,
+                    editBillPositionFragment).commit();
+        }
     }
 
     private BillPosition getBillPositionFromIntent() {

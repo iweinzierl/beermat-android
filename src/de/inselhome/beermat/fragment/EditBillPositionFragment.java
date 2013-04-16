@@ -25,6 +25,8 @@ public class EditBillPositionFragment extends SherlockFragment {
     private static final String SAVED_DESCRIPTION = "bundle.description";
     private static final String SAVED_PRICE = "bundle.price";
 
+    private boolean initialized = false;
+
     public interface Callback {
         BillPosition getBillPosition();
 
@@ -65,12 +67,9 @@ public class EditBillPositionFragment extends SherlockFragment {
     public void onActivityCreated(Bundle bundle) {
         super.onActivityCreated(bundle);
 
-        // XXX currently not working. onActivityCreated is called twice for some reason.
-        // XXX i would like to use onViewStateRestored(Bundle), but it's not known by the system in this api version?!
         if (bundle != null) {
-            setDescription(bundle.getString(SAVED_DESCRIPTION));
-            setPrice(bundle.getDouble(SAVED_PRICE));
-        } else {
+            onViewStateRestored(bundle);
+        } else if (!initialized) {
             setDescription(callback.getBillPosition().getBillItem().getDescription());
             setPrice(callback.getBillPosition().getBillItem().getPrice());
         }
@@ -85,6 +84,15 @@ public class EditBillPositionFragment extends SherlockFragment {
             bundle.putDouble(SAVED_PRICE, getPrice());
         } catch (BeermatException e) {
             Log.w(LOGTAG, "Unable to save price");
+        }
+    }
+
+    public void onViewStateRestored(Bundle bundle) {
+        // for some reason, this method is not called from the android system itself
+        if (bundle != null && bundle.containsKey(SAVED_DESCRIPTION) && bundle.containsKey(SAVED_PRICE)) {
+            setPrice(bundle.getDouble(SAVED_PRICE));
+            setDescription(bundle.getString(SAVED_DESCRIPTION));
+            initialized = true;
         }
     }
 
