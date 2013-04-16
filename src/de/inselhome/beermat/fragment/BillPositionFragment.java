@@ -1,5 +1,6 @@
 package de.inselhome.beermat.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,19 +17,27 @@ import java.text.ParseException;
 
 public class BillPositionFragment extends SherlockFragment {
 
-    public interface ActionHandler {
+    public interface Callback {
         void onOk(BillPosition billPosition);
 
         void onCancel();
     }
 
-    private ActionHandler handler;
+    private Callback callback;
 
     private EditText description;
     private EditText price;
 
-    public BillPositionFragment(ActionHandler handler) {
-        this.handler = handler;
+    @Override
+    public void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+
+        Activity activity = getActivity();
+        if (!(activity instanceof Callback)) {
+            throw new IllegalArgumentException("Parent Activity must implement Callback!");
+        }
+
+        callback = (Callback) activity;
     }
 
     @Override
@@ -53,10 +62,10 @@ public class BillPositionFragment extends SherlockFragment {
             public void onClick(View view) {
                 BillPosition billPosition = extractBillPosition();
                 if (billPosition != null) {
-                    handler.onOk(billPosition);
+                    callback.onOk(billPosition);
                 }
                 else {
-                    handler.onCancel();
+                    callback.onCancel();
                 }
             }
         });
@@ -66,7 +75,7 @@ public class BillPositionFragment extends SherlockFragment {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                handler.onCancel();
+                callback.onCancel();
             }
         });
     }

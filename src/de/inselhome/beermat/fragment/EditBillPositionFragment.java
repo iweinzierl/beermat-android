@@ -65,6 +65,8 @@ public class EditBillPositionFragment extends SherlockFragment {
     public void onActivityCreated(Bundle bundle) {
         super.onActivityCreated(bundle);
 
+        // XXX currently not working. onActivityCreated is called twice for some reason.
+        // XXX i would like to use onViewStateRestored(Bundle), but it's not known by the system in this api version?!
         if (bundle != null) {
             setDescription(bundle.getString(SAVED_DESCRIPTION));
             setPrice(bundle.getDouble(SAVED_PRICE));
