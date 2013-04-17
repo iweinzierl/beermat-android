@@ -28,6 +28,10 @@ public class EditBillPositionIntent extends Intent {
         super(intent);
     }
 
+    public EditBillPositionIntent(final Context context) {
+        super(context, EditBillPosition.class);
+    }
+
     public BillPosition getOldBillPosition() {
         Object obj = getSerializableExtra(EXTRA_BILLPOSITION_ORIG);
         return obj instanceof BillPosition ? (BillPosition) obj : null;

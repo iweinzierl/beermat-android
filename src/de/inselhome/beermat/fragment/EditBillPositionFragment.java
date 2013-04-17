@@ -70,8 +70,7 @@ public class EditBillPositionFragment extends SherlockFragment {
         if (bundle != null) {
             onViewStateRestored(bundle);
         } else if (!initialized) {
-            setDescription(callback.getBillPosition().getBillItem().getDescription());
-            setPrice(callback.getBillPosition().getBillItem().getPrice());
+            initialize(callback.getBillPosition());
         }
     }
 
@@ -84,6 +83,13 @@ public class EditBillPositionFragment extends SherlockFragment {
             bundle.putDouble(SAVED_PRICE, getPrice());
         } catch (BeermatException e) {
             Log.w(LOGTAG, "Unable to save price");
+        }
+    }
+
+    private void initialize(BillPosition billPosition) {
+        if (billPosition != null) {
+            setDescription(callback.getBillPosition().getBillItem().getDescription());
+            setPrice(callback.getBillPosition().getBillItem().getPrice());
         }
     }
 
@@ -185,7 +191,10 @@ public class EditBillPositionFragment extends SherlockFragment {
     private BillPosition extractBillPosition() throws BeermatException {
         BillItem item = new BillItem(getDescription(), getPrice());
         BillPosition newBP = new BillPosition(item);
-        newBP.setAmount(callback.getBillPosition().getAmount());
+
+        if (callback.getBillPosition() != null) {
+            newBP.setAmount(callback.getBillPosition().getAmount());
+        }
 
         return newBP;
     }

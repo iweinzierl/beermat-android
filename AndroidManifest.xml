@@ -15,8 +15,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".NewBillPosition"
-                  android:label="New Bill Position"/>
         <activity android:name=".EditBillPosition"
                   android:label="Edit Bill Position"/>
         <activity android:name=".MyBillList"

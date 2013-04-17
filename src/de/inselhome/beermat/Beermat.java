@@ -17,7 +17,6 @@ import de.inselhome.beermat.fragment.BillFragment;
 import de.inselhome.beermat.intent.EditBillPositionIntent;
 import de.inselhome.beermat.intent.MyBillListIntent;
 import de.inselhome.beermat.intent.MyProfileListIntent;
-import de.inselhome.beermat.intent.NewBillPositionIntent;
 import de.inselhome.beermat.persistence.BillFileRepository;
 import de.inselhome.beermat.persistence.BillRepository;
 import de.inselhome.beermat.test.TestData;
@@ -116,17 +115,15 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
 
         switch (requestCode) {
 
-            case NewBillPositionIntent.REQUEST_BILLPOSITION:
-                if (resultCode == RESULT_OK) {
-                    NewBillPositionIntent i = new NewBillPositionIntent(data);
-                    addBillPosition(i.getBillPosition());
-                    return;
-                }
-
             case EditBillPositionIntent.REQUEST_BILLPOSITION:
                 if (resultCode == RESULT_OK) {
                     EditBillPositionIntent i = new EditBillPositionIntent(data);
-                    editBillPosition(i.getOldBillPosition(), i.getNewBillPosition());
+                    if (i.getOldBillPosition() != null) {
+                        editBillPosition(i.getOldBillPosition(), i.getNewBillPosition());
+                    }
+                    else {
+                        addBillPosition(i.getNewBillPosition());
+                    }
                     return;
                 }
 
@@ -204,8 +201,8 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
     }
 
     private void onAddBillPosition() {
-        Intent i = new NewBillPositionIntent(this);
-        startActivityForResult(i, NewBillPositionIntent.REQUEST_BILLPOSITION);
+        Intent i = new EditBillPositionIntent(this);
+        startActivityForResult(i, EditBillPositionIntent.REQUEST_BILLPOSITION);
     }
 
     private void addBillPosition(final BillPosition billPosition) {
