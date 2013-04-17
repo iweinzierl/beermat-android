@@ -4,6 +4,7 @@ package de.inselhome.beermat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import de.inselhome.beermat.domain.Bill;
 import de.inselhome.beermat.exception.BillPersistenceException;
@@ -29,27 +30,39 @@ public class MyBillList extends SherlockFragmentActivity implements MyBillListFr
 
         billList = new ArrayList<Bill>();
         billListFragment = new MyBillListFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.listFragment, billListFragment).commit();
+    }
 
-        if (bundle == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.listFragment, billListFragment).commit();
-        }
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadBills();
     }
 
     @Override
     public List<Bill> getBills() {
-        if (billList == null || billList.isEmpty()) {
-            try {
-                setBillList(BillFileRepository.getInstance(this).getAll());
-            } catch (BillPersistenceException e) {
-                Log.e(LOGTAG, "Unable to read bills from file system", e);
-            }
-        }
-
         return billList;
+    }
+
+    private void loadBills() {
+        try {
+            List<Bill> bills = BillFileRepository.getInstance(this).getAll();
+
+            if (bills != null && !bills.isEmpty()) {
+                setBillList(bills);
+            }
+            else {
+                Toast.makeText(this, "TODO: No profiles found", Toast.LENGTH_LONG).show();
+            }
+        } catch (BillPersistenceException e) {
+            Log.e(LOGTAG, "Unable to read bills from file system", e);
+            Toast.makeText(this, "TODO: Unable to load bills", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void setBillList(List<Bill> billList) {
         this.billList = billList;
+        billListFragment.notifyDataChanged();
     }
 
     @Override

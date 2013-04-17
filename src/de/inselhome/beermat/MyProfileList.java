@@ -33,19 +33,33 @@ public class MyProfileList extends SherlockFragmentActivity implements MyBillLis
     }
 
     @Override
-    public List<Bill> getBills() {
-        if (profileList.isEmpty()) {
-            try {
-                setBillList(BillFileRepository.getInstance(this).getAllProfiles());
-            } catch (BillPersistenceException e) {
-                Log.e(LOGTAG, "Unable to read profiles from file system", e);
-            }
-        }
+    public void onResume() {
+        super.onResume();
+        loadProfiles();
+    }
 
+    @Override
+    public List<Bill> getBills() {
         return profileList;
     }
 
-    private void setBillList(List<Bill> profileList) {
+    private void loadProfiles() {
+        try {
+            List<Bill> profiles = BillFileRepository.getInstance(this).getAllProfiles();
+
+            if (profiles != null && !profiles.isEmpty()) {
+                setProfiles(profiles);
+            }
+            else {
+                Toast.makeText(this, "TODO: No profiles found", Toast.LENGTH_LONG).show();
+            }
+        } catch (BillPersistenceException e) {
+            Log.e(LOGTAG, "Unable to read profiles from file system", e);
+            Toast.makeText(this, "TODO: Unable to load profiles", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void setProfiles(List<Bill> profileList) {
         this.profileList = profileList;
         billListFragment.notifyDataChanged();
     }

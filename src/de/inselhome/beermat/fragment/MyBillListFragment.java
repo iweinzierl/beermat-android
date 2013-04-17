@@ -26,7 +26,6 @@ public class MyBillListFragment extends SherlockListFragment {
     }
 
     private FragmentCallback fragmentCallback;
-    private BillAdapter billAdapter;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -37,19 +36,13 @@ public class MyBillListFragment extends SherlockListFragment {
             throw new IllegalArgumentException("Parent Activity must implement FragmentCallback.");
         }
 
-        billAdapter = new BillAdapter();
-
         setFragmentCallback((FragmentCallback) activity);
-        setListAdapter(billAdapter);
-
-        notifyDataChanged();
+        setListAdapter(new BillAdapter());
     }
 
     @Override
     public void onActivityCreated(Bundle bundle) {
         super.onCreate(bundle);
-        billAdapter.clear();
-        billAdapter.add(getFragmentCallback().getBills());
 
         getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -63,7 +56,7 @@ public class MyBillListFragment extends SherlockListFragment {
     @Override
     public void onListItemClick(ListView list, View view, int pos, long id) {
         Log.d(LOGTAG, "Clicked bill at position " + pos);
-        getFragmentCallback().onBillSelected((Bill) billAdapter.getItem(pos));
+        getFragmentCallback().onBillSelected((Bill) getListAdapter().getItem(pos));
     }
 
     private void onItemLongClick(final Bill item) {
@@ -84,6 +77,7 @@ public class MyBillListFragment extends SherlockListFragment {
     }
 
     public void notifyDataChanged() {
+        BillAdapter billAdapter = (BillAdapter) getListAdapter();
         billAdapter.clear();
         billAdapter.add(fragmentCallback.getBills());
     }
