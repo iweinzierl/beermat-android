@@ -29,12 +29,15 @@ public class MyBillList extends SherlockFragmentActivity implements MyBillListFr
 
         billList = new ArrayList<Bill>();
         billListFragment = new MyBillListFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.listFragment, billListFragment).commit();
+
+        if (bundle == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.listFragment, billListFragment).commit();
+        }
     }
 
     @Override
     public List<Bill> getBills() {
-        if (billList.isEmpty()) {
+        if (billList == null || billList.isEmpty()) {
             try {
                 setBillList(BillFileRepository.getInstance(this).getAll());
             } catch (BillPersistenceException e) {
