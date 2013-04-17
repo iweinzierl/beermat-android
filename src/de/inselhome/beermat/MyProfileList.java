@@ -51,11 +51,11 @@ public class MyProfileList extends SherlockFragmentActivity implements MyBillLis
                 setProfiles(profiles);
             }
             else {
-                Toast.makeText(this, "TODO: No profiles found", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.myprofilelist_no_profiles), Toast.LENGTH_LONG).show();
             }
         } catch (BillPersistenceException e) {
             Log.e(LOGTAG, "Unable to read profiles from file system", e);
-            Toast.makeText(this, "TODO: Unable to load profiles", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.myprofilelist_load_profiles_failed), Toast.LENGTH_LONG).show();
         }
     }
 

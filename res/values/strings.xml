@@ -26,6 +26,12 @@
     <string name="editbillposition_ok">Save</string>
     <string name="editbillposition_cancel">Cancel</string>
 
+    <string name="mybilllist_no_bills">No saved bills existing.</string>
+    <string name="mybilllist_load_bills_failed">Failed to load saved bills.</string>
+
+    <string name="myprofilelist_no_profiles">No saved profiles existing.</string>
+    <string name="myprofilelist_load_profiles_failed">Failed to load saved profiles.</string>
+
     <string name="dialog_savebill_name_label">Name of bill:</string>
 
     <string name="dialog_bill_delete">Delete</string>

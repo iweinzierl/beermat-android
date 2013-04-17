@@ -26,6 +26,12 @@
     <string name="editbillposition_ok">Speichern</string>
     <string name="editbillposition_cancel">Abbrechen</string>
 
+    <string name="mybilllist_no_bills">Keine gespeicherten Rechnungen vorhanden.</string>
+    <string name="mybilllist_load_bills_failed">Rechnungen konnten nicht geladen werden.</string>
+
+    <string name="myprofilelist_no_profiles">Keine gespeicherten Profile vorhanden.</string>
+    <string name="myprofilelist_load_profiles_failed">Profile konnten nicht geladen werden.</string>
+
     <string name="dialog_savebill_name_label">Name der Rechnung:</string>
 
     <string name="dialog_bill_delete">Löschen</string>

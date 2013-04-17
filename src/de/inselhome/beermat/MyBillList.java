@@ -52,11 +52,11 @@ public class MyBillList extends SherlockFragmentActivity implements MyBillListFr
                 setBillList(bills);
             }
             else {
-                Toast.makeText(this, "TODO: No profiles found", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.mybilllist_no_bills), Toast.LENGTH_LONG).show();
             }
         } catch (BillPersistenceException e) {
             Log.e(LOGTAG, "Unable to read bills from file system", e);
-            Toast.makeText(this, "TODO: Unable to load bills", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.mybilllist_load_bills_failed), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -79,7 +79,7 @@ public class MyBillList extends SherlockFragmentActivity implements MyBillListFr
         try {
             billRepository.delete(bill);
         } catch (BillPersistenceException e) {
-            Log.e(LOGTAG, "Unable to delete bill " + bill.getId(), e);
+            Log.e(LOGTAG, "TODO: Unable to delete bill " + bill.getId(), e);
         }
 
         billListFragment.notifyDataChanged();
