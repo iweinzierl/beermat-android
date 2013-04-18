@@ -4,6 +4,8 @@
     <string name="empty_content_description"> </string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
 
     <string name="beermat_bill_saved_successful">Rechnung erfolgreich gespeichert.</string>
     <string name="beermat_profile_saved_successful">Profil erfolgreich gespeichert.</string>
