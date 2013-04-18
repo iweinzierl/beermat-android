@@ -216,6 +216,7 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
             @Override
             public void onOk(String name) {
                 BillRepository billRepository = BillFileRepository.getInstance(Beermat.this);
+                bill.setDate(new Date());
                 bill.setName(name);
                 try {
                     Bill newBill = billRepository.save(bill);
