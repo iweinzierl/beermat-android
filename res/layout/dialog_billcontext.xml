@@ -9,6 +9,8 @@
     <de.inselhome.beermat.widget.CustomTextView
             style="@style/Beermat.Text.Bigger"
             android:id="@+id/delete"
+            android:padding="5dp"
+            android:background="@drawable/button_selector"
             android:text="@string/dialog_bill_delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
