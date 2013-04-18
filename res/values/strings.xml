@@ -2,9 +2,16 @@
 <resources>
     <string name="app_name">beermat.git</string>
     <string name="empty_content_description"> </string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
-    <string name="bill_sum_label">Total:</string>
-    <string name="bill_name_unknown">-- new bill --</string>
+    <string name="beermat_bill_saved_successful">Successfully saved bill.</string>
+    <string name="beermat_profile_saved_successful">Successfully saved profile.</string>
+    <string name="beermat_really_reset_amounts">Really reset amounts?</string>
+    <string name="beermat_really_reset_items">Your old bill will be dismissed. Continue?</string>
+    <string name="beermat_sum_label">Total:</string>
+    <string name="beermat_name_unknown">-- new bill --</string>
+    <string name="beermat_could_not_load_last_bill">Unable to load the last bill.</string>
 
     <string name="menu_bill_addposition">New entry</string>
     <string name="menu_bill_savebill">Save bill</string>

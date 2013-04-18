@@ -2,9 +2,16 @@
 <resources>
     <string name="app_name">beermat.git</string>
     <string name="empty_content_description"> </string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
 
-    <string name="bill_sum_label">Summe:</string>
-    <string name="bill_name_unknown">-- neue Rechnung --</string>
+    <string name="beermat_bill_saved_successful">Rechnung erfolgreich gespeichert.</string>
+    <string name="beermat_profile_saved_successful">Profil erfolgreich gespeichert.</string>
+    <string name="beermat_really_reset_amounts">Wirklich zurücksetzen?</string>
+    <string name="beermat_really_reset_items">Ihre alte Rechnung wird verworfen. Weiter?</string>
+    <string name="beermat_sum_label">Summe:</string>
+    <string name="beermat_name_unknown">-- neue Rechnung --</string>
+    <string name="beermat_could_not_load_last_bill">Die letzte Rechnung konnte leider nicht geladen werden.</string>
 
     <string name="menu_bill_addposition">Neuer Eintrag</string>
     <string name="menu_bill_savebill">Rechnung speichern</string>

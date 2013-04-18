@@ -126,7 +126,7 @@ public class BillFragment extends SherlockFragment implements BillPositionAdapte
         if (nameView != null) {
 
             if (Strings.isNullOrEmpty(name)) {
-                nameView.setText(R.string.bill_name_unknown);
+                nameView.setText(R.string.beermat_name_unknown);
             }
             else {
                 nameView.setText(name);

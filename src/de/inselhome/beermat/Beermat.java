@@ -19,7 +19,6 @@ import de.inselhome.beermat.intent.MyBillListIntent;
 import de.inselhome.beermat.intent.MyProfileListIntent;
 import de.inselhome.beermat.persistence.BillFileRepository;
 import de.inselhome.beermat.persistence.BillRepository;
-import de.inselhome.beermat.test.TestData;
 import de.inselhome.beermat.widget.SaveBillDialogBuilder;
 
 import java.io.File;
@@ -148,10 +147,6 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
 
         if (bill == null) {
             bill = new Bill();
-
-            for (BillPosition billPosition : TestData.createBillPositionList()) {
-                bill.addBillPosition(billPosition);
-            }
         }
 
         return bill;
@@ -224,7 +219,7 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
                 bill.setName(name);
                 try {
                     Bill newBill = billRepository.save(bill);
-                    Toast.makeText(Beermat.this, "Saved bill with id " + newBill.getId(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(Beermat.this, R.string.beermat_bill_saved_successful, Toast.LENGTH_LONG).show();
                     billFragment.notifyDataChanged();
                 } catch (BillPersistenceException e) {
                     Log.e(LOGTAG, e.getMessage(), e);
@@ -245,8 +240,7 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
 
                 try {
                     Bill newProfile = billRepository.saveAsProfile(profile);
-                    Toast.makeText(Beermat.this, "Saved profile " + newProfile.getName(),
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(Beermat.this, R.string.beermat_profile_saved_successful , Toast.LENGTH_LONG).show();
                 } catch (BillPersistenceException e) {
                     Log.e(LOGTAG, e.getMessage(), e);
                     Toast.makeText(Beermat.this, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -256,14 +250,15 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
     }
 
     private void onResetItems() {
-        new AlertDialog.Builder(this).setMessage("Remove all items from bill?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(this).setMessage(R.string.beermat_really_reset_items).setPositiveButton(R.string.yes,
+                new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialogInterface, final int i) {
                 bill = new Bill();
                 bill.setDate(new Date());
                 billFragment.notifyDataChanged();
             }
-        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+        }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialogInterface, final int i) {
             }
@@ -271,13 +266,14 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
     }
 
     private void onResetAmounts() {
-        new AlertDialog.Builder(this).setMessage("Reset all amounts of bill?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(this).setMessage(R.string.beermat_really_reset_amounts).setPositiveButton(R.string.yes,
+                new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialogInterface, final int i) {
                 bill.resetBillPositionAmounts();
                 billFragment.notifyDataChanged();
             }
-        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+        }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialogInterface, final int i) {
             }
@@ -336,6 +332,7 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
             return new Gson().fromJson(reader, Bill.class);
         } catch (FileNotFoundException e) {
             Log.e(LOGTAG, "Unable to read bill from disk.", e);
+            Toast.makeText(this, R.string.beermat_could_not_load_last_bill, Toast.LENGTH_LONG).show();
         } finally {
             if (inputStream != null) {
                 try {

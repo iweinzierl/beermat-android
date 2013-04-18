@@ -27,7 +27,7 @@
 
         <de.inselhome.beermat.widget.CustomTextView
                 style="@style/Beermat.Text.Bigger"
-                android:text="@string/bill_sum_label"
+                android:text="@string/beermat_sum_label"
                 android:layout_marginRight="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
