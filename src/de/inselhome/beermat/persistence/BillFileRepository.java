@@ -130,6 +130,16 @@ public class BillFileRepository implements BillRepository {
         return bills;
     }
 
+    @Override
+    public void deleteProfile(Bill profile) {
+        if (profile.getId() > 0) {
+            File toDelete = FileUtils.getProfileFile(context, profile.getId());
+            if (toDelete.exists() && toDelete.delete()) {
+                Log.i(LOGTAG, "Successfully deleted bill " + profile.getName());
+            }
+        }
+    }
+
     private long determineId(Bill bill) throws BillPersistenceException {
         if (bill.getId() > 0) {
             return bill.getId();

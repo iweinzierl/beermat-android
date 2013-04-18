@@ -11,6 +11,7 @@ import de.inselhome.beermat.exception.BillPersistenceException;
 import de.inselhome.beermat.fragment.MyBillListFragment;
 import de.inselhome.beermat.intent.MyProfileListIntent;
 import de.inselhome.beermat.persistence.BillFileRepository;
+import de.inselhome.beermat.persistence.BillRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +74,18 @@ public class MyProfileList extends SherlockFragmentActivity implements MyBillLis
 
     @Override
     public void onDeleteBill(Bill profile) {
-        Toast.makeText(this, "Profile deletion is currently not implemented", Toast.LENGTH_LONG).show();
+        deleteProfile(profile);
+    }
+
+    private void deleteProfile(Bill profile) {
+        BillRepository billRepository = BillFileRepository.getInstance(this);
+
+        try {
+            billRepository.deleteProfile(profile);
+        } catch (BillPersistenceException e) {
+            Log.e(LOGTAG, "TODO: Unable to delete profile " + profile.getId(), e);
+        }
+
+        billListFragment.notifyDataChanged();
     }
 }

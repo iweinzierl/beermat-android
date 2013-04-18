@@ -65,6 +65,11 @@ public class FileUtils {
         return new File(billData, getFileName(id));
     }
 
+    public static File getProfileFile(Context context, long id) {
+        File profileData = getProfileDataDirectory(context);
+        return new File(profileData, getFileName(id));
+    }
+
     public static List<String> getOrderedFilenames(File directory) {
         String[] files = directory.list(new FilenameFilter() {
             @Override

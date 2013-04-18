@@ -19,4 +19,6 @@ public interface BillRepository {
     Bill saveAsProfile(Bill bill) throws BillPersistenceException;
 
     List<Bill> getAllProfiles() throws BillPersistenceException;
+
+    void deleteProfile(Bill bill) throws BillPersistenceException;
 }
