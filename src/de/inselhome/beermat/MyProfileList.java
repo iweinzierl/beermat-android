@@ -82,6 +82,7 @@ public class MyProfileList extends SherlockFragmentActivity implements MyBillLis
 
         try {
             billRepository.deleteProfile(profile);
+            profileList.remove(profile);
         } catch (BillPersistenceException e) {
             Log.e(LOGTAG, "TODO: Unable to delete profile " + profile.getId(), e);
         }

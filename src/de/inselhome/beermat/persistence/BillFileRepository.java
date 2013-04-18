@@ -39,6 +39,7 @@ public class BillFileRepository implements BillRepository {
         long id = determineId(bill);
         File persistTo = buildBillFile(FileUtils.getBillDataDirectory(context), id);
 
+        bill.setId(id);
         writeToFile(bill, persistTo);
 
         bill.setId(id);
@@ -89,6 +90,8 @@ public class BillFileRepository implements BillRepository {
 
         File profileDirectory = FileUtils.getProfileDataDirectory(context);
         long nextId = FileUtils.getNextId(profileDirectory);
+
+        profile.setId(nextId);
 
         File target = buildProfileFile(nextId);
         FileWriter writer = null;

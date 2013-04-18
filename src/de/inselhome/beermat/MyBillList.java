@@ -78,6 +78,7 @@ public class MyBillList extends SherlockFragmentActivity implements MyBillListFr
 
         try {
             billRepository.delete(bill);
+            billList.remove(bill);
         } catch (BillPersistenceException e) {
             Log.e(LOGTAG, "TODO: Unable to delete bill " + bill.getId(), e);
         }
