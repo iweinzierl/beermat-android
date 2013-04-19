@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.google.common.base.Strings;
 import de.inselhome.beermat.R;
 import de.inselhome.beermat.domain.BillItem;
 import de.inselhome.beermat.domain.BillPosition;
@@ -54,9 +55,11 @@ public class EditBillPositionFragment extends SherlockFragment {
 
         View view = inflater.inflate(R.layout.fragment_editbillposition, container, false);
 
+        EditText price = (EditText) view.findViewById(R.id.price);
         Button ok = (Button) view.findViewById(R.id.ok);
         Button cancel = (Button) view.findViewById(R.id.cancel);
 
+        prepareDefaultPrice(price);
         prepareOkButton(ok);
         prepareCancelButton(cancel);
 
@@ -161,6 +164,19 @@ public class EditBillPositionFragment extends SherlockFragment {
         return -1;
     }
 
+    private NumberFormat getNumberFormat() {
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+        numberFormat.setMaximumFractionDigits(2);
+        numberFormat.setMinimumFractionDigits(2);
+        return numberFormat;
+    }
+
+    private void prepareDefaultPrice(EditText price) {
+        if (price != null) {
+            price.setText(getNumberFormat().format(0d));
+        }
+    }
+
     private void prepareOkButton(final Button ok) {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,6 +205,14 @@ public class EditBillPositionFragment extends SherlockFragment {
     }
 
     private BillPosition extractBillPosition() throws BeermatException {
+        if (getPrice() <= 0) {
+            throw new BeermatException(getString(R.string.editbillposition_price_must_be_positive));
+        }
+
+        if (Strings.isNullOrEmpty(getDescription())) {
+            throw new BeermatException(getString(R.string.editbillposition_description_must_not_be_null));
+        }
+
         BillItem item = new BillItem(getDescription(), getPrice());
         BillPosition newBP = new BillPosition(item);
 

@@ -34,6 +34,8 @@
     <string name="editbillposition_price">Preis</string>
     <string name="editbillposition_ok">Speichern</string>
     <string name="editbillposition_cancel">Abbrechen</string>
+    <string name="editbillposition_price_must_be_positive">Bitte einen Betrag größer 0 eingeben.</string>
+    <string name="editbillposition_description_must_not_be_null">Bitte eine Beschreibung eingeben.</string>
 
     <string name="mybilllist_no_bills">Keine gespeicherten Rechnungen vorhanden.</string>
     <string name="mybilllist_load_bills_failed">Rechnungen konnten nicht geladen werden.</string>

@@ -34,6 +34,8 @@
     <string name="editbillposition_price">Price</string>
     <string name="editbillposition_ok">Save</string>
     <string name="editbillposition_cancel">Cancel</string>
+    <string name="editbillposition_price_must_be_positive">Please enter a price that is higher than 0.</string>
+    <string name="editbillposition_description_must_not_be_null">Please enter a description.</string>
 
     <string name="mybilllist_no_bills">No saved bills existing.</string>
     <string name="mybilllist_load_bills_failed">Failed to load saved bills.</string>
