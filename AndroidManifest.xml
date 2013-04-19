@@ -15,11 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".EditBillPosition"
-                  android:label="Edit Bill Position"/>
-        <activity android:name=".MyBillList"
-                  android:label="My Bill List"/>
-        <activity android:name=".MyProfileList"
-                  android:label="My Profile List"/>
+        <activity android:name=".EditBillPosition" />
+        <activity android:name=".MyBillList" />
+        <activity android:name=".MyProfileList" />
     </application>
 </manifest>
