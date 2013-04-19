@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockListFragment;
 import de.inselhome.beermat.domain.Bill;
@@ -17,6 +18,8 @@ public class MyBillListFragment extends SherlockListFragment {
 
     private static final String LOGTAG = "[beermat] MyBillListFragment";
 
+    private static final String ARGS_ADAPTER_CLASS = "mybilllistfragment.adapterclass";
+
     public interface FragmentCallback {
         List<Bill> getBills();
 
@@ -26,6 +29,20 @@ public class MyBillListFragment extends SherlockListFragment {
     }
 
     private FragmentCallback fragmentCallback;
+
+    public static MyBillListFragment newInstance() {
+        return new MyBillListFragment();
+    }
+
+    public static MyBillListFragment newInstance(final String adapterClass) {
+        Bundle args = new Bundle();
+        args.putString(ARGS_ADAPTER_CLASS, adapterClass);
+
+        MyBillListFragment fragment = new MyBillListFragment();
+        fragment.setArguments(args);
+
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -37,7 +54,7 @@ public class MyBillListFragment extends SherlockListFragment {
         }
 
         setFragmentCallback((FragmentCallback) activity);
-        setListAdapter(new BillAdapter());
+        setupAdapter();
     }
 
     @Override
@@ -57,6 +74,23 @@ public class MyBillListFragment extends SherlockListFragment {
     public void onListItemClick(ListView list, View view, int pos, long id) {
         Log.d(LOGTAG, "Clicked bill at position " + pos);
         getFragmentCallback().onBillSelected((Bill) getListAdapter().getItem(pos));
+    }
+
+    private void setupAdapter() {
+        Bundle args = getArguments();
+
+        if (args != null && args.containsKey(ARGS_ADAPTER_CLASS)) {
+            try {
+            Class clazz = Class.forName(args.getString(ARGS_ADAPTER_CLASS));
+            ListAdapter adapter =  (BillAdapter) clazz.newInstance();
+            setListAdapter(adapter);
+            } catch (Exception e) {
+                throw new IllegalArgumentException("Unknown ListAdapter class: " + args.getString(ARGS_ADAPTER_CLASS), e);
+            }
+        }
+        else {
+            setListAdapter(new BillAdapter());
+        }
     }
 
     private void onItemLongClick(final Bill item) {

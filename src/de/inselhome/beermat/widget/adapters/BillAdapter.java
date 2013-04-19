@@ -78,11 +78,11 @@ public class BillAdapter extends BaseAdapter {
         }
     }
 
-    private String formatDate(Date date) {
+    protected String formatDate(Date date) {
         return new SimpleDateFormat(DATE_FORMAT).format(date);
     }
 
-    private String formatSum(double sum) {
+    protected String formatSum(double sum) {
         return NumberFormat.getCurrencyInstance(Locale.getDefault()).format(sum);
     }
 

@@ -29,7 +29,7 @@ public class MyBillList extends SherlockFragmentActivity implements MyBillListFr
         setContentView(R.layout.activity_mybilllist);
 
         billList = new ArrayList<Bill>();
-        billListFragment = new MyBillListFragment();
+        billListFragment = MyBillListFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.listFragment, billListFragment).commit();
     }
 

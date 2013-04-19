@@ -40,6 +40,7 @@
 
     <string name="myprofilelist_no_profiles">Keine gespeicherten Profile vorhanden.</string>
     <string name="myprofilelist_load_profiles_failed">Profile konnten nicht geladen werden.</string>
+    <string name="myprofilelist_total_items">Einträge:</string>
 
     <string name="dialog_savebill_name_label">Name der Rechnung:</string>
 

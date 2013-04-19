@@ -29,7 +29,7 @@ public class MyProfileList extends SherlockFragmentActivity implements MyBillLis
         setContentView(R.layout.activity_mybilllist);
 
         profileList = new ArrayList<Bill>();
-        billListFragment = new MyBillListFragment();
+        billListFragment = MyBillListFragment.newInstance("de.inselhome.beermat.widget.adapters.ProfileAdapter");
         getSupportFragmentManager().beginTransaction().replace(R.id.listFragment, billListFragment).commit();
     }
 
