@@ -1,6 +1,8 @@
 package de.inselhome.beermat;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -66,10 +68,28 @@ public class MyProfileList extends SherlockFragmentActivity implements MyBillLis
     }
 
     @Override
-    public void onBillSelected(Bill profile) {
-        Intent i = new MyProfileListIntent(profile);
-        setResult(RESULT_OK, i);
-        finish();
+    public void onBillSelected(final Bill profile) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setMessage(R.string.mybilllist_really_load);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new MyProfileListIntent(profile);
+                setResult(RESULT_OK, i);
+                finish();
+            }
+        });
+
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // do nothing
+            }
+        });
+
+        builder.show();
     }
 
     @Override

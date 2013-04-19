@@ -39,6 +39,9 @@
 
     <string name="mybilllist_no_bills">Keine gespeicherten Rechnungen vorhanden.</string>
     <string name="mybilllist_load_bills_failed">Rechnungen konnten nicht geladen werden.</string>
+    <string name="mybilllist_really_load">Du verlierst alle ungespeicherten Änderungen deiner aktuellen Rechnung.
+        Wirklich
+        laden?</string>
 
     <string name="myprofilelist_no_profiles">Keine gespeicherten Profile vorhanden.</string>
     <string name="myprofilelist_load_profiles_failed">Profile konnten nicht geladen werden.</string>

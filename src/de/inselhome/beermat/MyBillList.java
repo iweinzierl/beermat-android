@@ -1,6 +1,8 @@
 package de.inselhome.beermat;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,8 +52,7 @@ public class MyBillList extends SherlockFragmentActivity implements MyBillListFr
 
             if (bills != null && !bills.isEmpty()) {
                 setBillList(bills);
-            }
-            else {
+            } else {
                 Toast.makeText(this, getString(R.string.mybilllist_no_bills), Toast.LENGTH_LONG).show();
             }
         } catch (BillPersistenceException e) {
@@ -66,10 +67,28 @@ public class MyBillList extends SherlockFragmentActivity implements MyBillListFr
     }
 
     @Override
-    public void onBillSelected(Bill bill) {
-        Intent i = new MyBillListIntent(this, bill);
-        setResult(RESULT_OK, i);
-        finish();
+    public void onBillSelected(final Bill bill) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setMessage(R.string.mybilllist_really_load);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new MyBillListIntent(MyBillList.this, bill);
+                setResult(RESULT_OK, i);
+                finish();
+            }
+        });
+
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // do nothing
+            }
+        });
+
+        builder.show();
     }
 
     @Override

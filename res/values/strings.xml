@@ -39,6 +39,8 @@
 
     <string name="mybilllist_no_bills">No saved bills existing.</string>
     <string name="mybilllist_load_bills_failed">Failed to load saved bills.</string>
+    <string name="mybilllist_really_load">You will loose any unsaved changes in your current bill. Really
+        load?</string>
 
     <string name="myprofilelist_no_profiles">No saved profiles existing.</string>
     <string name="myprofilelist_load_profiles_failed">Failed to load saved profiles.</string>
