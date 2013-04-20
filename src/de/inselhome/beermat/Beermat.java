@@ -49,6 +49,7 @@ public class Beermat extends SherlockFragmentActivity implements BillFragment.Fr
         setContentView(R.layout.activity_beermat);
         billFragment = setupBillFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.billFragment, billFragment).commit();
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override
