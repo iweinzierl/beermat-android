@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">beermat.git</string>
+    <string name="app_name">Bierdeckel</string>
     <string name="empty_content_description"> </string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
